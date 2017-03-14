@@ -1,5 +1,4 @@
 #include "Formation.h"
-#include <iostream>
 
 Formation::Formation()
 {
@@ -29,6 +28,14 @@ void Formation::setFormCapacity()
 {
     std::cout<<"Type capacity ratio: ";
     std::cin>>formCapacity;
+}
+void Formation::setFormation()
+{
+    setFormType();
+    setFormPower();
+    setFormDefense();
+    setFormSpeed();
+    setFormCapacity();
 }
 Formation::~Formation()
 {

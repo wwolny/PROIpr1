@@ -3,22 +3,26 @@
 
 #include "Formation.h"
 #include "Unit.h"
+#include <iostream>
 
 class Fleet : public Formation, public Unit
 {
-    Formation fleetFormation;
+    public:
+    Formation *currentFormation;
     int fleetSize;//number of units
     int fleetSpeed;
     int fleetPower;
     int fleetDefense;
     int fleetCapacity;
     int fleetMaxSize;
+    int fleetMaxFormations;
+    int fleetFormationsNumber;
     int fleetAttackNumber;
     int fleetTransportNumber;
-    Unit **fleetUnits;// = new Unit*[fleetMaxSize];
-    public:
-        Fleet();
-        ~Fleet();
+    Unit **fleetUnits;
+    Formation **fleetFormations;
+    Fleet();
+    ~Fleet();
 };
 
 #endif // FLEET_H

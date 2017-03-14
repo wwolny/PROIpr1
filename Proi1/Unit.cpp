@@ -1,5 +1,4 @@
 #include "Unit.h"
-#include <iostream>
 
 Unit::Unit()
 {
@@ -37,7 +36,15 @@ void Unit::addUnitSpeed()
     std::cout<<"Type speed: ";
     std::cin>>unitSpeed;
 }
-
+void Unit::createUnit()
+{
+    addUnitType();
+    addUnitName();
+    addUnitPower();
+    addUnitDefense();
+    addUnitCapacity();
+    addUnitSpeed();
+}
 void Unit::Wypisz()
 {
     std::cout<<"Type: "<<unitType<<std::endl<<"Name: "<<unitName<<std::endl<<"Power: "<<unitPower<<std::endl<<

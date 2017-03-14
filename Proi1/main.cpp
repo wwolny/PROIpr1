@@ -28,14 +28,9 @@ JakasKlasa::JakasKlasa()
 int main()
 {
 
-    JakasKlasa tZmienna;
+    /*JakasKlasa tZmienna;
     Unit a;
-    a.addUnitType();
-    a.addUnitName();
-    a.addUnitPower();
-    a.addUnitDefense();
-    a.addUnitCapacity();
-    a.addUnitSpeed();
-    a.Wypisz();
+    a.createUnit();
+    a.Wypisz();*/
     return( 0 );
 }

@@ -1,6 +1,6 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include <string>
+#include <iostream>
 
 class Unit
 {
@@ -11,7 +11,8 @@ class Unit
     int unitPower;
     int unitDefense;
     int unitCapacity;
-
+    //Unit *next;
+    //Unit *prev;
     public:
         Unit();
         ~Unit();
@@ -21,6 +22,7 @@ class Unit
         void addUnitDefense();
         void addUnitCapacity();
         void addUnitSpeed();
+        void createUnit();
         void Wypisz();
     protected:
 };
