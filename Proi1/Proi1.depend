@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1489498602 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/main.cpp
+	<iostream>
+	"Unit.h"
+
+1489498778 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.cpp
+	"Unit.h"
+	<iostream>
+
+1489499606 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.h
+	<string>
+
+1489500061 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.cpp
+	"Formation.h"
+	<iostream>
+
+1489522624 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.h
+	<iostream>
+

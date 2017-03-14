@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../Proi1" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -20,10 +21,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Formation.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="Fleet.cpp" />
+		<Unit filename="Fleet.h" />
+		<Unit filename="Formation.cpp" />
+		<Unit filename="Formation.h" />
 		<Unit filename="Proi1.cbp" />
+		<Unit filename="Unit.cpp" />
+		<Unit filename="Unit.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
