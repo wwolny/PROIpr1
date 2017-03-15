@@ -2,7 +2,8 @@
 
 Formation::Formation()
 {
-    //ctor
+    next=NULL;
+    prev=NULL;
 }
 void Formation::setFormType()
 {

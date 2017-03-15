@@ -1,36 +1,24 @@
 #include <iostream>
 #include "Unit.h"
-using namespace std;
-class JakasKlasa
-{
-    int a;
-    char b;
-    std::string c;
-public:
-    JakasKlasa();
-};
+#include "Formation.h"
+#include "Fleet.h"
+#include "FleetManager.h"
 
-JakasKlasa::JakasKlasa()
-{
-    cout << "Klasa utworzona, wartosci zmiennych: " << endl;
-    cout << "a = " << a << endl;
-    cout << "b = '" << b << "'" << endl;
-    cout << "c = \"" << c << "\"" << endl;
-    a = 123;
-    b = 'x';
-    c = "napis";
-    cout << "Wartosci zmiennych po zainicjowaniu w konstruktorze: " << endl;
-    cout << "a = " << a << endl;
-    cout << "b = '" << b << "'" << endl;
-    cout << "c = \"" << c << "\"" << endl;
-}
+void formationAsset(FleetManager *myFleet);
 
 int main()
 {
-
-    /*JakasKlasa tZmienna;
+    FleetManager *myFleet;
+    myFleet=new FleetManager;
+    formationAsset(myFleet);
     Unit a;
     a.createUnit();
-    a.Wypisz();*/
+    a.Wypisz();
     return( 0 );
+}
+
+void formationAsset(FleetManager *myFleet)
+{
+    myFleet->addFormation(myFleet);
+    addFormation(myFleet);
 }

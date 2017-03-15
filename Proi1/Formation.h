@@ -12,8 +12,8 @@ class Formation
     int formDefense;
     int formSpeed;
     int formCapacity;
-    //Formation *next;
-    //Formation *prev;
+    Formation *next;
+    Formation *prev;
     public:
     Formation();
     ~Formation();

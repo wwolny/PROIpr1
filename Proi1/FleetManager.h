@@ -17,10 +17,10 @@ class FleetManager : public Fleet
         void setFleetDefense(Fleet *fleet);
         void setFleetCapacity(Fleet *fleet);
         void fleetUpdate(Fleet *fleet);
-        Unit bestPowerUnit(Fleet *fleet);
-        Unit bestSpeedUnit(Fleet *fleet);
-        Unit bestCapacityUnit(Fleet *fleet);
-        Unit bestDefenseUnit(Fleet *fleet);
+        Unit *bestPowerUnit(Fleet *fleet);
+        Unit *bestSpeedUnit(Fleet *fleet);
+        Unit *bestCapacityUnit(Fleet *fleet);
+        Unit *bestDefenseUnit(Fleet *fleet);
         FleetManager();
         ~FleetManager();
 };

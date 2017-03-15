@@ -9,18 +9,14 @@ class Fleet : public Formation, public Unit
 {
     public:
     Formation *currentFormation;
+    Formation *lastFormation;
+    Unit *firstUnit;
     int fleetSize;//number of units
     int fleetSpeed;
     int fleetPower;
     int fleetDefense;
     int fleetCapacity;
-    int fleetMaxSize;
-    int fleetMaxFormations;
     int fleetFormationsNumber;
-    int fleetAttackNumber;
-    int fleetTransportNumber;
-    Unit **fleetUnits;
-    Formation **fleetFormations;
     Fleet();
     ~Fleet();
 };
