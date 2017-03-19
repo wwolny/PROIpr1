@@ -4,7 +4,7 @@
 
 class Unit
 {
-    public:
+    private://private getset
     std::string unitName;
     int unitSpeed;
     int unitPower;
@@ -15,14 +15,6 @@ class Unit
     public:
         Unit();
         ~Unit();
-        void addUnitName();
-        void addUnitPower();
-        void addUnitDefense();
-        void addUnitCapacity();
-        void addUnitSpeed();
-        void createUnit();
-        void Wypisz();
-    protected:
 };
 
 #endif // UNIT_H

@@ -2,6 +2,7 @@
 #define FORMATION_H
 
 #include <iostream>
+#include "Unit.h"
 
 
 class Formation
@@ -17,12 +18,7 @@ class Formation
     public:
     Formation();
     ~Formation();
-    void setFormType();
-    void setFormPower();
-    void setFormDefense();
-    void setFormSpeed();
-    void setFormCapacity();
-    void setFormation();
+
 };
 
 #endif // FORMATION_H
