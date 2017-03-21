@@ -1,20 +1,20 @@
 #include "FleetManager.h"
 Unit* FleetManager::bestPowerUnit(Fleet *fleet)
 {
-    if(fleet->fleetSize==0)
+    if(fleet->getFleetSize()==0)
     {
         return NULL;
     }
     Unit *tmp, *uPower;
     int iPower;
     tmp=fleet->firstUnit;
-    iPower=tmp->unitPower;
+    iPower=tmp->getUnitPower();
     uPower=tmp;
     while(tmp)
     {
-        if(tmp->unitPower>iPower)
+        if(tmp->getUnitPower()>iPower)
         {
-            iPower=tmp->unitPower;
+            iPower=tmp->getUnitPower();
             uPower=tmp;
         }
         tmp=tmp->next;
@@ -26,20 +26,20 @@ Unit* FleetManager::bestPowerUnit(Fleet *fleet)
 
 Unit *bestSpeedUnit(Fleet *fleet)
 {
-    if(fleet->fleetSize==0)
+    if(fleet->getFleetSize()==0)
     {
         return NULL;
     }
     Unit *tmp;
     int iSpeed;
     tmp=fleet->firstUnit;
-    iSpeed=tmp->unitSpeed;
+    iSpeed=tmp->getUnitSpeed();
     fleet->currentUnit=tmp;
     while(tmp)
     {
-        if(tmp->unitSpeed>iSpeed)
+        if(tmp->getUnitSpeed()>iSpeed)
         {
-            iSpeed=tmp->unitSpeed;
+            iSpeed=tmp->getUnitSpeed();
             fleet->currentUnit=tmp;
         }
         tmp=tmp->next;
@@ -48,20 +48,20 @@ Unit *bestSpeedUnit(Fleet *fleet)
 }
 Unit *bestCapacityUnit(Fleet *fleet)
 {
-    if(fleet->fleetSize==0)
+    if(fleet->getFleetSize()==0)
     {
         return NULL;
     }
     Unit *tmp, *uCapa;
     int iCapa;
     tmp=fleet->firstUnit;
-    iCapa=tmp->unitCapacity;
+    iCapa=tmp->getUnitCapacity();
     uCapa=tmp;
     while(tmp)
     {
-        if(tmp->unitCapacity>iCapa)
+        if(tmp->getUnitCapacity()>iCapa)
         {
-            iCapa=tmp->unitCapacity;
+            iCapa=tmp->getUnitCapacity();
             uCapa=tmp;
         }
         tmp=tmp->next;
@@ -70,20 +70,20 @@ Unit *bestCapacityUnit(Fleet *fleet)
 }
 Unit *bestDefenseUnit(Fleet *fleet)
 {
-    if(fleet->fleetSize==0)
+    if(fleet->getFleetSize()==0)
     {
         return NULL;
     }
     Unit *tmp, *uDef;
     int iDef;
     tmp=fleet->firstUnit;
-    iDef=tmp->unitDefense;
+    iDef=tmp->getUnitDefense();
     uDef=tmp;
     while(tmp)
     {
-        if(tmp->unitDefense>iDef)
+        if(tmp->getUnitDefense()>iDef)
         {
-            iDef=tmp->unitDefense;
+            iDef=tmp->getUnitDefense();
             uDef=tmp;
         }
         tmp=tmp->next;
@@ -91,131 +91,130 @@ Unit *bestDefenseUnit(Fleet *fleet)
     return uDef;
 }
 
-
-void FleetManager::changeFormation(Fleet* fleet, Formation* formName)
+int FleetManager::changeFormation(Fleet* fleet, Formation* formName)//0 if there is no such a formation, 1 if everything is ok
 {
-    fleet->currentFormation=formName;
+    Formation* tmpForm=fleet->lastFormation;
+    if(tmpForm==NULL) return 0;
+    for(int i=0; i<fleet->getFleetFormNumb(); i++)
+    {
+        if(tmpForm==formName)
+        {
+            fleet->currentFormation=formName;
+            return 1;
+        }
+        tmpForm=tmpForm->prev;
+    }
+    return 0;
 }
-void FleetManager::addFormation(Fleet *fleet)
+int FleetManager::addFormation(Fleet *fleet, std::string formType, int formPower, int formDefense, int formSpeed, int formCapacity)
 {
     Formation *newFormation;
-    newFormation=new Formation;
-    newFormation->setFormation();
+    newFormation= new Formation;
+    setFormation(newFormation, formType, formPower, formDefense, formSpeed, formCapacity);
     if(fleet->lastFormation==NULL)
     {
         fleet->lastFormation=newFormation;
-        return;
+        return 0;
     }
+    newFormation->prev=fleet->lastFormation;
     fleet->lastFormation->next=newFormation;
-    newFormation->prev=fleet->lastFormation->next;
     fleet->lastFormation=newFormation;
-    fleet->fleetFormationsNumber++;
+    fleet->setFleetFormNumb(fleet->getFleetFormNumb()+1);
+    return 1;
 }
-void FleetManager::deleteFormation(Fleet *fleet)
+
+int FleetManager::deleteFormation(Fleet *fleet, Formation* delFormation)
 {
-    Formation *tmp;
-    tmp=fleet->lastFormation;
-    std::cout<<"Which formation do you want to delete(Type exactly the same name): "<<std::endl;
-    for(int i=0;i<fleet->fleetFormationsNumber;i++)
+    Formation* tmpForm;
+    tmpForm=fleet->lastFormation;
+    if(tmpForm==NULL) return 0;
+    for(int i=0; i<fleet->getFleetFormNumb(); i++)
     {
-        std::cout<<i+1<<". \""<<tmp->formType<<"\""<<std::endl;
-    }
-    std::string test;
-    int Good=0;
-    std::cin>>test;
-    std::cin.ignore(1000,'\n');
-    tmp=fleet->lastFormation;
-    for(int j=0;j<fleet->fleetFormationsNumber;j++)
-    {
-        if(test==tmp->formType)
+        if(tmpForm==delFormation)
         {
-            Good=1; break;
+            if(tmpForm==fleet->currentFormation)    fleet->currentFormation=NULL;
+            if(tmpForm==fleet->lastFormation && fleet->getFleetFormNumb()==1)
+            {
+                fleet->setFleetFormNumb(0);
+                fleet->lastFormation=NULL;
+            }
+            else if(tmpForm==fleet->lastFormation)
+            {
+                fleet->setFleetFormNumb(fleet->getFleetFormNumb()-1);
+                fleet->lastFormation=fleet->lastFormation->prev;
+            }
+            if(tmpForm->next){tmpForm->next->prev=tmpForm->prev;}
+            if(tmpForm->prev){tmpForm->prev->next=tmpForm->next;}
+            delete tmpForm;
+            return 1;
         }
-        tmp=tmp->prev;
+        tmpForm=tmpForm->prev;
     }
-    if(!Good) {std::cout<<"Zle dane!"; return;}
-    if(tmp==fleet->currentFormation){fleet->currentFormation=NULL;}
-    if(tmp==fleet->lastFormation && fleet->fleetFormationsNumber==1)
-    {
-        fleet->fleetFormationsNumber=0; fleet->lastFormation=NULL;
-    }
-    else if(tmp==fleet->lastFormation)
-    {
-        fleet->fleetFormationsNumber--; fleet->lastFormation=fleet->lastFormation->prev;
-    }
-    if(tmp->next){tmp->next->prev=tmp->prev;}
-    if(tmp->prev){tmp->prev->next=tmp->next;}
-    delete tmp;
+    return 0;
 }
-void FleetManager::addUnit(Fleet *fleet)
+int FleetManager::addUnit(Fleet *fleet, std::string unitName, int unitSpeed, int unitPower, int unitDefense, int unitCapacity)
 {
-    Unit *newUnit, *tmp;
+    Unit* newUnit;
     newUnit=new Unit;
-    newUnit->createUnit();
-    tmp=fleet->firstUnit;
-    if(fleet->firstUnit==NULL){fleet->firstUnit=newUnit;    return;}
-    tmp->next=fleet->firstUnit;
-    fleet->firstUnit->prev=tmp;
-    fleet->firstUnit=tmp;
-    fleet->fleetSize++;
+    createUnit(newUnit, unitName, unitPower, unitDefense, unitCapacity, unitSpeed);
+    if(fleet->firstUnit==NULL)  {fleet->firstUnit=newUnit;    return 1;}
+    fleet->firstUnit->prev=newUnit;
+    newUnit->next=fleet->firstUnit;
+    fleet->firstUnit=newUnit;
+    fleet->setFleetSize(fleet->getFleetSize()+1);
+    return 1;
 }
-void FleetManager::deleteUnit(Fleet *fleet)
+int FleetManager::deleteUnit(Fleet *fleet, Unit* delUnit)
 {
-    Unit *tmp;
-    tmp=fleet->firstUnit;
-    std::cout<<"Which unit do you want to delete(Type exactly the same name): "<<std::endl;
-    for(int i=0;i<fleet->fleetSize;i++)
+    Unit* tmpUnit;
+    tmpUnit=fleet->firstUnit;
+    if(tmpUnit==NULL) return 0;
+    for(int i=0; i<fleet->getFleetSize(); i++)
     {
-        std::cout<<i+1<<". \""<<tmp->unitName<<"\""<<std::endl;
-    }
-    std::string test;
-    int Good=0;
-    std::cin>>test;
-    std::cin.ignore(1000,'\n');
-    tmp=fleet->firstUnit;
-    for(int j=0;j<fleet->fleetSize;j++)
-    {
-        if(test==tmp->unitName)
+        if(tmpUnit==delUnit)
         {
-            Good=1; break;
+            if(tmpUnit==fleet->firstUnit&& fleet->getFleetSize()==1)
+            {
+                fleet->setFleetSize(0); fleet->firstUnit=NULL;
+            }
+            else if(tmpUnit==fleet->firstUnit)
+            {
+                fleet->setFleetSize(fleet->getFleetSize()-1);
+                fleet->firstUnit=fleet->firstUnit->next;
+                fleet->firstUnit->prev=NULL;
+            }
+            if(tmpUnit->next){tmpUnit->next->prev=tmpUnit->prev;}
+            if(tmpUnit->prev){tmpUnit->prev->next=tmpUnit->next;}
+            delete tmpUnit;
+            return 1;
         }
-        tmp=tmp->next;
+        tmpUnit=tmpUnit->next;
     }
-    if(!Good) {std::cout<<"Zle dane!"; return;}
-    if(tmp==fleet->firstUnit&& fleet->fleetSize==1)
-    {
-        fleet->fleetSize=0; fleet->firstUnit=NULL;
-    }
-    else if(tmp==fleet->firstUnit)
-    {
-        fleet->fleetFormationsNumber--; fleet->firstUnit=fleet->firstUnit->next;
-    }
-    if(tmp->next){tmp->next->prev=tmp->prev;}
-    if(tmp->prev){tmp->prev->next=tmp->next;}
-    delete tmp;
+    return 0;
 }
-void FleetManager::setFleetSpeed(Fleet *fleet)
+void FleetManager::setFleetSpeed(Fleet *fleet, int speed)
 {
+
     //fleet->fleetSpeed=(bestSpeedUnit(fleet)->unitSpeed/fleet->fleetSize)*fleet->formSpeed;
 }
-void FleetManager::setFleetPower(Fleet *fleet)
+void FleetManager::setFleetPower(Fleet *fleet, int power)
 {
     //fleet->fleetPower=(bestPowerUnit(fleet)->unitPower/fleet->fleetSize)*fleet->formPower;
 }
-void FleetManager::setFleetDefense(Fleet *fleet)
+void FleetManager::setFleetDefense(Fleet *fleet, int defense)
 {
     //fleet->fleetDefense=(bestDefenseUnit(fleet)->unitDefense/fleet->fleetSize)*fleet->formDefense;
 }
-void FleetManager::setFleetCapacity(Fleet *fleet)
+void FleetManager::setFleetCapacity(Fleet *fleet, int capacity)
 {
     //fleet->fleetCapacity=(bestCapacityUnit(fleet)->unitCapacity/fleet->fleetSize)*fleet->formCapacity;
 }
-void FleetManager::fleetUpdate(Fleet *fleet)
+void FleetManager::fleetUpdate(Fleet *fleet, int speed, int power, int defense, int capacity)
 {
-    setFleetSpeed(fleet);
-    setFleetPower(fleet);
-    setFleetDefense(fleet);
-    setFleetCapacity(fleet);
+    setFleetSpeed(fleet, speed);
+    setFleetPower(fleet, power);
+    setFleetDefense(fleet, defense);
+    setFleetCapacity(fleet, capacity);
 }
 
 FleetManager::FleetManager()
@@ -238,27 +237,27 @@ FleetManager::~FleetManager()
     delete fleet;
 }
 
-void FleetManager::addUnitName(Unit unit, std::string name)
+void FleetManager::addUnitName(Unit* unit, std::string name)
 {
-    unit->unitName=name;
+    unit->setUnitName(name);
 }
-void FleetManager::addUnitPower(Unit unit, int Power)
+void FleetManager::addUnitPower(Unit* unit, int Power)
 {
-    unit->unitPower=Power;
+    unit->setUnitPower(Power);
 }
-void FleetManager::addUnitDefense(Unit unit, int Defense)
+void FleetManager::addUnitDefense(Unit* unit, int Defense)
 {
-    unit->unitDefense=Defense;
+    unit->setUnitDefense(Defense);
 }
-void FleetManager::addUnitCapacity(Unit unit, int Capacity)
+void FleetManager::addUnitCapacity(Unit* unit, int Capacity)
 {
-    unit->unitCapacity=Capacity;
+    unit->setUnitCapacity(Capacity);
 }
-void FleetManager::addUnitSpeed(Unit unit, int Speed)
+void FleetManager::addUnitSpeed(Unit* unit, int Speed)
 {
-    unit->unitSpeed=Speed;
+    unit->setUnitSpeed(Speed);
 }
-void FleetManager::createUnit(Unit unit, std::string name, int Power, int Defense, int Capacity, int Speed)
+void FleetManager::createUnit(Unit* unit, std::string name, int Power, int Defense, int Capacity, int Speed)
 {
     addUnitName(unit, name);
     addUnitPower(unit, Power);
@@ -266,36 +265,37 @@ void FleetManager::createUnit(Unit unit, std::string name, int Power, int Defens
     addUnitCapacity(unit, Capacity);
     addUnitSpeed(unit, Speed);
 }
-void FleetManager::Wypisz()
+/*void FleetManager::Wypisz()
 {
     std::cout<<"Unit Name: "<<unitName<<std::endl<<"Power: "<<unitPower<<std::endl<<
     "Speed: "<<unitSpeed<<std::endl<<"Defense: "<<unitDefense<<std::endl<<"Capacity: "<<unitCapacity;
-}
+}*/
 
-void FleetManager::setFormType(Formation form, std::string Name)
+void FleetManager::setFormType(Formation* form, std::string Name)
 {
-    form->formType=Name;
+    form->setFormationName(Name);
 }
-void FleetManager::setFormPower(Formation form, int Power)
+void FleetManager::setFormPower(Formation* form, int Power)
 {
-    form->formPower=Power;
+    form->setFormationPower(Power);
 }
-void FleetManager::setFormDefense(Formation form, int Defense)
+void FleetManager::setFormDefense(Formation* form, int Defense)
 {
-    form->formDefense=Defense;
+    form->setFormationDefense(Defense);
 }
-void FleetManager::setFormSpeed(Formation form, int Speed)
+void FleetManager::setFormSpeed(Formation* form, int Speed)
 {
-    form->formSpeed=Speed;
+    form->setFormationSpeed(Speed);
 }
-void FleetManager::setFormCapacity(Formation form, int Capacity)
+void FleetManager::setFormCapacity(Formation* form, int Capacity)
 {
-    form->formCapacity=Capacity;
+    form->setFormationCapacity(Capacity);
 }
-void FleetManager::setFormation(Formation form, std::string Name, int Power, int Defense, int Speed, int Capacity)
+void FleetManager::setFormation(Formation* form, std::string Name, int Power, int Defense, int Speed, int Capacity)
 {
     setFormType(form, Name);
     setFormPower(form, Power);
     setFormDefense(form, Defense);
     setFormSpeed(form, Speed);
     setFormCapacity(form, Capacity);
+}
