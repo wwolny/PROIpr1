@@ -5,12 +5,6 @@
 
 class Unit
 {
-    private:
-        std::string unitName;
-        int unitSpeed;
-        int unitPower;
-        int unitDefense;
-        int unitCapacity;
     public:
         Unit *next;
         Unit *prev;
@@ -18,14 +12,23 @@ class Unit
         int getUnitPower(){return unitPower;}
         int getUnitDefense(){return unitDefense;}
         int getUnitCapacity(){return unitCapacity;}
+        bool getInFormation(){return inFormation;}
         std::string getUnitName(){return unitName;}
         int setUnitSpeed(int Speed);
         int setUnitDefense(int Defense);
         int setUnitPower(int Power);
         int setUnitCapacity(int Capacity);
         int setUnitName(std::string Name);
+        void setInFormation(bool i);
         Unit();
         ~Unit();
+    private:
+        bool inFormation;
+        std::string unitName;
+        int unitSpeed;
+        int unitPower;
+        int unitDefense;
+        int unitCapacity;
 };
 
 #endif // UNIT_H

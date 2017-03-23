@@ -8,9 +8,14 @@ void formationAsset(FleetManager *myFleet);
 
 int main()
 {
-    FleetManager *myFleet;
-    myFleet=new FleetManager;
-    formationAsset(myFleet);
+    Formation* newformation;
+    newformation =new Formation(5);
+    //newformation++;
+    //std::cout<<newformation->getFormNowSize();
+    delete newformation;
+    //FleetManager *myFleet;
+    //myFleet=new FleetManager;
+    //formationAsset(myFleet);
     return( 0 );
 }
 

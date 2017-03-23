@@ -25,6 +25,12 @@
 		<Unit filename="Fleet.h" />
 		<Unit filename="FleetManager.cpp" />
 		<Unit filename="FleetManager.h" />
+		<Unit filename="FleetManagerTEST.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="FleetManagerTEST.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="Formation.cpp" />
 		<Unit filename="Formation.h" />
 		<Unit filename="Proi1.cbp" />
