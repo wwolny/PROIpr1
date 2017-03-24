@@ -9,11 +9,11 @@ Unit::Unit()
     this->unitPower=0;
     this->unitDefense=0;
     this->unitCapacity=0;
-    this->inFormation=0;
+    this->inFormation=NULL;
 }
-void Unit::setInFormation(bool i)
+void Unit::setInFormation(Formation* form)
 {
-    this->inFormation=i;
+    this->inFormation=form;
 }
 
 int Unit::setUnitSpeed(int Speed)

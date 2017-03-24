@@ -1,38 +1,39 @@
 # depslib dependency file v1.0
-1490285384 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/main.cpp
+1490311543 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/main.cpp
 	<iostream>
 	"Unit.h"
 	"Formation.h"
 	"Fleet.h"
 	"FleetManager.h"
 
-1490284770 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.cpp
+1490311092 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.cpp
 	"Unit.h"
 
-1490233172 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.h
+1490311935 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.h
 	<iostream>
 	<string>
-
-1490296449 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.cpp
 	"Formation.h"
-
-1490296184 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.h
-	<iostream>
-	<vector>
-	"Unit.h"
-
-1490235641 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.cpp
 	"Fleet.h"
 
-1490285412 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.h
+1490314693 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.cpp
+	"Formation.h"
+
+1490313462 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.h
+	<iostream>
+	"Unit.h"
+
+1490300811 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.cpp
+	"Fleet.h"
+
+1490311838 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.h
 	"Formation.h"
 	"Unit.h"
 	<iostream>
 
-1490296417 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.cpp
+1490314821 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.cpp
 	"FleetManager.h"
 
-1490296602 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.h
+1490314857 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.h
 	"Unit.h"
 	"Formation.h"
 	"Fleet.h"

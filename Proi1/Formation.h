@@ -2,11 +2,10 @@
 #define FORMATION_H
 
 #include <iostream>
-#include <vector>
 #include "Unit.h"
 
 
-class Formation//Attention! You have to FIRSTLY implement function startFormation(Width)
+class Formation //Attention! You have to FIRSTLY implement function startFormation(Width)
 {
      public:
         int startFormation(int Width);
@@ -22,14 +21,17 @@ class Formation//Attention! You have to FIRSTLY implement function startFormatio
         int getFormMaxSize(){return formMaxSize;}
         int getFormWidth(){return formWidth;}
         int getFormRows(){return Rows;}
-        Unit* getUnitArr(int Width, int Rows);
+        class Unit* getUnitArr(int Width, int Rows);
+        int getUnitWidth(Unit* unit);
+        int getUnitRow(Unit* unit);
         int setFormationSpeed(int Speed);
         int setFormationDefense(int Defense);
         int setFormationPower(int Power);
         int setFormationCapacity(int Capacity);
         int setFormationName(std::string Name);
-        int operator++();
-        int operator--();//operators return -1 if they cannot increment or decrement formNowSize
+        class Unit*** formArray;
+        Formation operator++();
+        Formation operator--();//operators return -1 if they cannot increment or decrement formNowSize
         Formation();
         Formation(int Width);
         ~Formation();
@@ -44,7 +46,6 @@ class Formation//Attention! You have to FIRSTLY implement function startFormatio
         int formMaxSize;//how many units can be in formation  Maximum
         static const int Rows=5;//how many units max can be in one row
         int formWidth;
-        Unit **formArray[][Rows];
 };
 
 #endif // FORMATION_H

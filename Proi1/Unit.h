@@ -1,7 +1,10 @@
 #ifndef UNIT_H
 #define UNIT_H
+
 #include <iostream>
 #include <string>
+#include "Formation.h"
+#include "Fleet.h"
 
 class Unit
 {
@@ -12,18 +15,18 @@ class Unit
         int getUnitPower(){return unitPower;}
         int getUnitDefense(){return unitDefense;}
         int getUnitCapacity(){return unitCapacity;}
-        bool getInFormation(){return inFormation;}
+        class Formation* getInFormation(){return inFormation;}
         std::string getUnitName(){return unitName;}
         int setUnitSpeed(int Speed);
         int setUnitDefense(int Defense);
         int setUnitPower(int Power);
         int setUnitCapacity(int Capacity);
         int setUnitName(std::string Name);
-        void setInFormation(bool i);
+        void setInFormation(Formation* form);
         Unit();
         ~Unit();
     private:
-        bool inFormation;
+        class Formation* inFormation;
         std::string unitName;
         int unitSpeed;
         int unitPower;
