@@ -481,7 +481,7 @@ void FleetManager::updateFormation(Formation* form)
     setFormCapacity(form);
 }
 //------------------
-int pullUnitFromForm(Formation* form, Unit* unit)
+int FleetManager::pullUnitFromForm(Formation* form, Unit* unit)
 {
     int iWidth=form->getUnitWidth(unit);
     int iRow=form->getUnitRow(unit);
@@ -505,11 +505,11 @@ int FleetManager::pushUnitToForm(Formation* form, Unit* unit, int Width, int Row
         {
             if(tmpUnit->getInFormation()!=NULL)
             {
-                this->pullUnitFromForm(tmpUnit->getInFormation(), unit);
+                pullUnitFromForm(tmpUnit->getInFormation(), unit);
             }
             if(form->formArray[Row][Width]!=NULL)
             {
-                this->pullUnitFromForm(form, form->formArray[Row][Width]);
+                pullUnitFromForm(form, form->formArray[Row][Width]);
             }
             form->formArray[Row][Width]=unit;
             unit->setInFormation(form);
