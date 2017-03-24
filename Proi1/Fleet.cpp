@@ -7,15 +7,11 @@ Fleet::Fleet()
     this->fleetFormNumb=0;
     this->fleetName="";
     this->fleetSize=0;
-    /*this->fleetSpeed=0;
-    this->fleetPower=0;
-    this->fleetDefense=0;
-    this->fleetCapacity=0;*/
 }
 
 Fleet::~Fleet()
 {
-
+    delete this;
 }
 int Fleet::operator++()
 {
@@ -47,28 +43,3 @@ int Fleet::setFleetName(std::string Name)
     this->fleetName=Name;
     return 1;
 }
-/*
-int Fleet::setFleetSpeed(int Speed)
-{
-    if(Speed<0) return 0;
-    this->fleetSpeed=Speed;
-    return 1;
-}
-int Fleet::setFleetPower(int Power)
-{
-    if(Power<0) return 0;
-    this->fleetPower=Power;
-    return 1;
-}
-int Fleet::setFleetDefense(int Defense)
-{
-    if(Defense<0) return 0;
-    this->fleetDefense=Defense;
-    return 1;
-}
-int Fleet::setFleetCapacity(int Capacity)
-{
-    if(Capacity<0) return 0;
-    this->fleetCapacity=Capacity;
-    return 1;
-}*/

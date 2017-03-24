@@ -120,6 +120,10 @@ int Formation::setFormationName(std::string Name)
     this->formType=Name;
     return 1;
 }
+int Formation::setFormNowSize(int Size)
+{
+    this->formNowSize=Size;
+}
 
 int Formation::getUnitWidth(Unit* unit)
 {

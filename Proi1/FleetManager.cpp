@@ -258,8 +258,9 @@ Formation* FleetManager::bestCapacityForm(Fleet* fleet)
     return fCapa;
 }
 //--------------------------------------------------
-int FleetManager::createFormation(Fleet *fleet, int Width, std::string formType, int formPower, int formDefense, int formSpeed, int formCapacity)
+int FleetManager::createFormation(Fleet *fleet, int Width, std::string formType)
 {
+    if(isFormName(formType)==0)return 0;
     Formation *newFormation;
     newFormation= new Formation(Width);
     setFormation(newFormation, formType);
@@ -277,6 +278,7 @@ int FleetManager::createFormation(Fleet *fleet, int Width, std::string formType,
 }
 int FleetManager::deleteFormation(Fleet *fleet, Formation* delFormation)
 {
+    if(delFormation==NULL) return 0;
     Formation* tmpForm;
     tmpForm=fleet->lastFormation;
     if(tmpForm==NULL) return 0;
@@ -306,10 +308,16 @@ int FleetManager::deleteFormation(Fleet *fleet, Formation* delFormation)
 //-------------------------
 int FleetManager::createUnit(Fleet *fleet, std::string unitName, int unitSpeed, int unitPower, int unitDefense, int unitCapacity)
 {
+    if(isUnitName(unitName)==0) return 0;
     Unit* newUnit;
     newUnit=new Unit;
     setUnit(newUnit, unitName, unitPower, unitDefense, unitCapacity, unitSpeed);
-    if(fleet->firstUnit==NULL)  {fleet->firstUnit=newUnit;    return 1;}
+    if(fleet->firstUnit==NULL)
+    {
+        fleet->firstUnit=newUnit;
+        fleet->setFleetSize(fleet->getFleetSize()+1);
+        return 1;
+    }
     fleet->firstUnit->prev=newUnit;
     newUnit->next=fleet->firstUnit;
     fleet->firstUnit=newUnit;
@@ -337,6 +345,7 @@ int FleetManager::deleteUnit(Fleet *fleet, Unit* delUnit)
             }
             if(tmpUnit->next){tmpUnit->next->prev=tmpUnit->prev;}
             if(tmpUnit->prev){tmpUnit->prev->next=tmpUnit->next;}
+            if(tmpUnit->getInFormation()!=NULL) pullUnitFromForm(tmpUnit->getInFormation(), tmpUnit);
             delete tmpUnit;
             return 1;
         }
@@ -345,32 +354,6 @@ int FleetManager::deleteUnit(Fleet *fleet, Unit* delUnit)
     return 0;
 }
 //----------------------------
-/*void FleetManager::addFleetSpeed(Fleet *fleet, int speed)
-{
-
-
-    fleet->setFleetSpeed((bestSpeedUnit(fleet)->getUnitSpeed())/(fleet->getFleetSize())*(fleet->getFormationSpeed()));
-}
-void FleetManager::addFleetPower(Fleet *fleet, int power)
-{
-    //fleet->setFleetPower((bestPowerUnit(fleet)->getUnitPower())/(fleet->getFleetSize())*(fleet->getFormationPower()));
-}
-void FleetManager::addFleetDefense(Fleet *fleet, int defense)
-{
-    //fleet->setFleetDefense((bestDefenseUnit(fleet)->getUnitDefense())/(fleet->getFleetSize())*(fleet->getFormationDefense()));
-}
-void FleetManager::addFleetCapacity(Fleet *fleet, int capacity)
-{
-    //fleet->setFleetCapacity((bestCapacityUnit(fleet)->getUnitCapacity())/(fleet->getFleetSize())*(fleet->getFormationCapacity()));
-}
-void FleetManager::fleetUpdate(Fleet *fleet, int speed, int power, int defense, int capacity)
-{
-    addFleetSpeed(fleet, speed);
-    addFleetPower(fleet, power);
-    addFleetDefense(fleet, defense);
-    addFleetCapacity(fleet, capacity);
-}*/
-//-------------------------------
 void FleetManager::addUnitName(Unit* unit, std::string name)
 {
     unit->setUnitName(name);
@@ -406,45 +389,48 @@ void FleetManager::setFormType(Formation* form, std::string Name)
 }
 void FleetManager::setFormPower(Formation* form)
 {
+    if(form->getFormNowSize()==0) return;
     Unit* tmp;
-    int iPow;
+    int iPow=0;
     tmp=form->getUnitArr(0,0);
     for(int i=0; i<form->getFormRows(); i++)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
-            tmp=form->getUnitArr(j,i);
-            iPow+=tmp->getUnitPower();
+            tmp=form->getUnitArr(i,j);
+            if(tmp) iPow=iPow+tmp->getUnitPower();
         }
     }
     form->setFormationPower(iPow);
 }
 void FleetManager::setFormDefense(Formation* form)
 {
+    if(form->getFormNowSize()==0) return;
     Unit* tmp;
-    int iDef;
+    int iDef=0;
     tmp=form->getUnitArr(0,0);
     for(int i=0; i<form->getFormRows(); i++)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
             tmp=form->getUnitArr(j,i);
-            iDef+=tmp->getUnitDefense();
+            if(tmp) iDef+=tmp->getUnitDefense();
         }
     }
     form->setFormationDefense(iDef);
 }
 void FleetManager::setFormSpeed(Formation* form)
 {
+    if(form->getFormNowSize()==0) return;
     Unit* tmp;
-    int iSpe;
+    int iSpe=0;
     tmp=form->getUnitArr(0,0);
     for(int i=0; i<form->getFormRows(); i++)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
             tmp=form->getUnitArr(j,i);
-            iSpe+=tmp->getUnitSpeed();
+            if(tmp)  iSpe+=tmp->getUnitSpeed();
         }
     }
     iSpe=iSpe/(form->getFormNowSize());
@@ -452,15 +438,16 @@ void FleetManager::setFormSpeed(Formation* form)
 }
 void FleetManager::setFormCapacity(Formation* form)
 {
+    if(form->getFormNowSize()==0) return;
     Unit* tmp;
-    int iCapa;
+    int iCapa=0;
     tmp=form->getUnitArr(0,0);
     for(int i=0; i<form->getFormRows(); i++)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
             tmp=form->getUnitArr(j,i);
-            iCapa+=tmp->getUnitCapacity();
+            if(tmp) iCapa+=tmp->getUnitCapacity();
         }
     }
     form->setFormationCapacity(iCapa);
@@ -491,11 +478,12 @@ int FleetManager::pullUnitFromForm(Formation* form, Unit* unit)
     }
     unit->setInFormation(NULL);
     form->formArray[iRow][iWidth]=NULL;
+    updateFormation(form);
     return 1;
 }
 int FleetManager::pushUnitToForm(Formation* form, Unit* unit, int Width, int Row)
 {
-    if(Width>form->getFormWidth()||Row>form->getFormRows()) return 0;
+    if(Width>form->getFormWidth()||Row>form->getFormRows()||form->getFormNowSize()==form->getFormMaxSize()) return 0;
     Unit* tmpUnit;
     tmpUnit=fleet->firstUnit;
     if(tmpUnit==NULL) return 0;
@@ -513,10 +501,57 @@ int FleetManager::pushUnitToForm(Formation* form, Unit* unit, int Width, int Row
             }
             form->formArray[Row][Width]=unit;
             unit->setInFormation(form);
+            form->setFormNowSize(form->getFormNowSize()+1);
+            updateFormation(form);
             return 1;
         }
     }
     return 0;
 }
-
 //--------------------
+int FleetManager::isUnitName(std::string name)
+{
+    Unit* tmp;
+    tmp=fleet->firstUnit;
+    while(tmp)
+    {
+        if(tmp->getUnitName()==name) return 0;
+        tmp=tmp->next;
+    }
+    return 1;
+}
+int FleetManager::isFormName(std::string name)
+{
+    Formation* tmp;
+    tmp=fleet->lastFormation;
+    while(tmp)
+    {
+        if(tmp->getFormationName()==name) return 0;
+        tmp=tmp->prev;
+    }
+    return 1;
+}
+//------------------------------
+class Formation* FleetManager::giveForm(std::string name)
+{
+    Formation* tmp;
+    tmp=fleet->lastFormation;
+    while(tmp)
+    {
+        if(tmp->getFormationName()==name) return tmp;
+        tmp=tmp->prev;
+    }
+    return NULL;
+}
+class Unit* FleetManager::giveUnit(std::string name)
+{
+    Unit* tmp;
+    tmp=fleet->firstUnit;
+    while(tmp)
+    {
+        if(tmp->getUnitName()==name) return tmp;
+        tmp=tmp->next;
+    }
+    return NULL;
+}
+//-------------

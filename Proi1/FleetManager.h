@@ -9,15 +9,10 @@
 class FleetManager
 {
     public:
-        int createFormation(Fleet *fleet, int Width, std::string formType, int formPower, int formDefense, int formSpeed, int formCapacity);
+        int createFormation(Fleet *fleet, int Width, std::string formType);
         int deleteFormation(Fleet *fleet, Formation* delFormation);
         int createUnit(Fleet *fleet, std::string unitName, int unitSpeed, int unitPower, int unitDefense, int unitCapacity);
         int deleteUnit(Fleet *fleet, Unit* delUnit);
-        /*void addFleetSpeed(Fleet *fleet, int speed);
-        void addFleetPower(Fleet *fleet, int power);
-        void addFleetDefense(Fleet *fleet, int defense);
-        void addFleetCapacity(Fleet *fleet, int capacity);
-        void fleetUpdate(Fleet *fleet, int speed, int power, int defense, int capacity);*/
         class Unit *bestPowerUnit(Fleet* fleet);//the best in fleet
         class Unit *bestSpeedUnit(Fleet* fleet);
         class Unit *bestCapacityUnit(Fleet* fleet);
@@ -45,6 +40,10 @@ class FleetManager
         void setFormCapacity(Formation* form);
         void setFormation(Formation* form, std::string Name);
         void updateFormation(Formation* form);
+        int isUnitName(std::string name);
+        int isFormName(std::string name);
+        class Formation* giveForm(std::string name);
+        class Unit* giveUnit(std::string name);
         FleetManager();
         ~FleetManager();
         Fleet *fleet;
