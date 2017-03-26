@@ -1,14 +1,13 @@
-//System("cls")
-//menu???
-//przeciazone operatory
-//testy boost czy oddzielny plik
-//
+//regula 3
+//testy
+//klasa menu //System("clear");
 #include <iostream>
 #include <cstdlib>
 #include "Unit.h"
 #include "Formation.h"
 #include "Fleet.h"
 #include "FleetManager.h"
+#include "TEST.h"
 
 void Menu(FleetManager* myFleet);
 void formationAsset(FleetManager *myFleet);
@@ -19,13 +18,17 @@ void writeFormAll(Fleet* fleet);
 void writeAllUnitInForm(Formation* form);
 int main()
 {
-    Formation a, b(5);
-    a.startFormation(5);
-
-
-    FleetManager *myFleet;
-    myFleet=new FleetManager;
-    Menu(myFleet);
+    //Formation a, b(5);
+    //a.startFormation(5);
+    TEST test;
+    if(test.testFormation()==1) std::cout<<"HipHipHurrra!"<<std::endl;
+    if(test.testUnit()==1) std::cout<<"Tez Dobrze :)!"<<std::endl;
+    if(test.testBestUnit()==1) std::cout<<"Jestes Zajebisty!"<<std::endl;
+    if(test.testBestForm()==1) std::cout<<"O stary jestes juz tuz tuz!"<<std::endl;
+    if(test.testBestUnitInForm()==1) std::cout<<"No i Gratulacje pieknie przeszedles 1% calej drogi, powodzenia dalej!"<<std::endl;
+    //FleetManager *myFleet;
+    //myFleet=new FleetManager;
+    //Menu(myFleet);
     //formationAsset(myFleet);
     return( 0 );
 }
@@ -39,13 +42,13 @@ void formationAsset(FleetManager *myFleet)
     myFleet->createUnit(myFleet->fleet, "Fregata3", 5, 4, 3, 5);
     writeForm(myFleet->fleet->lastFormation);
     writeUnit(myFleet->fleet->firstUnit);
-    myFleet->pushUnitToForm(myFleet->fleet->lastFormation ,myFleet->fleet->firstUnit, 0, 0);
+    myFleet->pushUnitToForm(myFleet->fleet->lastFormation ,myFleet->fleet->firstUnit);
     writeForm(myFleet->fleet->lastFormation);
     writeUnitAll(myFleet->fleet);
     std::string jednostka;
     std::cout<<"Podaj nazwe jednostki ktora dodasz do Formacji: ";
     std::cin>>jednostka;
-    myFleet->pushUnitToForm(myFleet->giveForm("Linia"), myFleet->giveUnit(jednostka), 1,0);
+    myFleet->pushUnitToForm(myFleet->giveForm("Linia"), myFleet->giveUnit(jednostka));
     writeAllUnitInForm(myFleet->giveForm("Linia"));
 }
 void writeForm(Formation* form)
@@ -94,7 +97,7 @@ void writeAllUnitInForm(Formation* form)
 }
 
 void Menu(FleetManager* myFleet)
-{
+{/*
     int width, pow, spe, def, capa, i=0, j=0;
     std::string name, tmp;
     char Next;
@@ -107,7 +110,7 @@ void Menu(FleetManager* myFleet)
     switch (Next)
     {
         case 'q':
-            //system("cls");
+            system("clear");
             std::cout<<"Type width of formation: ";         std::cin>>width;
             std::cout<<"Type name of formation: ";          std::cin>>name;
             myFleet->createFormation(myFleet->fleet, width,name);
@@ -140,7 +143,7 @@ void Menu(FleetManager* myFleet)
             std::cout<<"Type name of formation: ";          std::cin>>name;
             writeUnitAll(myFleet->fleet);
             std::cout<<"Type name of unit: ";          std::cin>>tmp;
-            myFleet->pushUnitToForm(myFleet->giveForm(name), myFleet->giveUnit(tmp), i, j);
+            myFleet->pushUnitToForm(myFleet->giveForm(name), myFleet->giveUnit(tmp));
             i++; j++;
             break;
         case 'c':
@@ -162,5 +165,5 @@ void Menu(FleetManager* myFleet)
             std::cout<<"Bad Input!";
             break;
     }
-    }
+    }*/
 }

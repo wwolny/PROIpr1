@@ -43,3 +43,15 @@ int Fleet::setFleetName(std::string Name)
     this->fleetName=Name;
     return 1;
 }
+
+void Fleet::nullFormList()
+{
+    Formation* tmp;
+    while(this->lastFormation)
+    {
+        tmp=this->lastFormation;
+        this->lastFormation=this->lastFormation->prev;
+        if(this->lastFormation) this->lastFormation->next=NULL;
+    }
+    tmp=NULL;
+}

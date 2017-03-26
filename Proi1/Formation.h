@@ -21,22 +21,27 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         int getFormMaxSize(){return formMaxSize;}
         int getFormWidth(){return formWidth;}
         int getFormRows(){return Rows;}
-        class Unit* getUnitArr(int Width, int Rows);
+        int getR(){return r;}
+        int getW(){return w;}
+        int updateRW();
+        Unit* getUnitArr(int Width, int Rows);
         int getUnitWidth(Unit* unit);
         int getUnitRow(Unit* unit);
+        void nullArr();
         int setFormNowSize(int Size);
         int setFormationSpeed(int Speed);
         int setFormationDefense(int Defense);
         int setFormationPower(int Power);
         int setFormationCapacity(int Capacity);
         int setFormationName(std::string Name);
-        class Unit*** formArray;
+        Unit*** formArray;
         Formation operator++();
         Formation operator--();//operators return -1 if they cannot increment or decrement formNowSize
         Formation();
         Formation(int Width);
         ~Formation();
     private:
+        int r=0,w=0;//i-Row, j-column(width)
         bool checkStartForm;
         std::string formType;
         int formPower;

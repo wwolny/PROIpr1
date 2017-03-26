@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <string>
-#include "Formation.h"
+//#include "Formation.h"
+
+class Formation;
 
 class Unit
 {
@@ -14,7 +16,7 @@ class Unit
         int getUnitPower(){return unitPower;}
         int getUnitDefense(){return unitDefense;}
         int getUnitCapacity(){return unitCapacity;}
-        class Formation* getInFormation(){return inFormation;}
+        Formation* getInFormation(){return inFormation;}
         std::string getUnitName(){return unitName;}
         int setUnitSpeed(int Speed);
         int setUnitDefense(int Defense);

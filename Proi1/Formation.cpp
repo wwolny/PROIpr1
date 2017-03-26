@@ -10,6 +10,8 @@ Formation::Formation()
     this->formSpeed=0;
     this->formCapacity=0;
     this->checkStartForm=0;
+    this->formWidth=0;
+    this->formNowSize=0;
     this->formArray=new Unit** [Rows];
 }
 Formation::Formation(int Width)
@@ -21,21 +23,19 @@ Formation::Formation(int Width)
     this->formDefense=0;
     this->formSpeed=0;
     this->formCapacity=0;
+    this->formNowSize=0;
     this->formArray=new Unit** [Rows];
-    for (int i=0; i<this->Rows; i++)
+    if(Width>0)
     {
-        this->formArray[i] = new Unit* [Width];
-    }
-    for(int i=0; i<this->Rows; i++)
-    {
-        for(int j=0; j<Width; j++)
+        this->formWidth=Width;
+        for (int i=0; i<this->Rows; i++)
         {
-            this->formArray[i][j]=NULL;
+            this->formArray[i] = new Unit* [Width];
         }
+        this->nullArr();
+        this->checkStartForm=1;
+        this->formMaxSize=Width*this->Rows;
     }
-    this->formWidth=Width;
-    this->checkStartForm=1;
-    this->formMaxSize=Width*this->Rows;
 }
 Formation Formation::operator++()
 {
@@ -55,9 +55,12 @@ Formation::~Formation()
 {
     for(int i=0; i<Rows; i++)
     {
-        for(int j=0; j<this->formWidth; j++)
+        if(this->getCheckStartForm())
         {
-            delete [] this->formArray[i][j];
+            for(int j=0; j<this->formWidth; j++)
+            {
+                delete [] this->formArray[i][j];
+            }
         }
         delete [] this->formArray[i];
     }
@@ -72,19 +75,13 @@ Unit* Formation::getUnitArr(int Width, int Row)
 
 int Formation::startFormation(int Width)
 {
-    if(this->checkStartForm==1) return 0;
+    if(this->checkStartForm==1||Width<1) return 0;
+    this->formWidth=Width;
     for (int i=0; i<this->Rows; i++)
     {
         this->formArray[i] = new Unit* [Width];
     }
-    for(int i=0; i<this->Rows; i++)
-    {
-        for(int j=0; j<Width; j++)
-        {
-            this->formArray[i][j]=NULL;
-        }
-    }
-    this->formWidth=Width;
+    this->nullArr();
     this->checkStartForm=1;
     this->formMaxSize=this->Rows*Width;
     return 1;
@@ -154,4 +151,30 @@ int Formation::getUnitRow(Unit* unit)
     return -1;
 }
 
+int Formation::updateRW()
+{
+    for(int i=0; i<this->Rows; i++)
+    {
+        for(int j=0; j<this->formWidth; j++)
+        {
+            if(formArray[i][j]==NULL)
+            {
+                this->r=i;
+                this->w=j;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
+void Formation::nullArr()
+{
+    for(int i=0; i<this->Rows; i++)
+    {
+        for(int j=0; j<this->formWidth; j++)
+        {
+            this->formArray[i][j]=NULL;
+        }
+    }
+}

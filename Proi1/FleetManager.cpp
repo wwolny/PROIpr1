@@ -19,7 +19,7 @@ FleetManager::~FleetManager()
     delete fleet;
 }
 //---------------------------------
-Unit* FleetManager::bestPowerUnit(Fleet *fleet)
+/*Unit* FleetManager::bestPowerUnit(Fleet *fleet)
 {
     if(fleet->getFleetSize()==0){return NULL;}
     Unit *tmp, *uPower;
@@ -94,8 +94,141 @@ Unit* FleetManager::bestDefenseUnit(Fleet *fleet)
         tmp=tmp->next;
     }
     return uDef;
-}
+}*/
 //--------------------------------------------------
+int FleetManager::bestPowerUnit(Fleet* fleet, Formation* best)
+{
+    if(fleet->getFleetSize()==0||best->getFormWidth()>0||best->getCheckStartForm()==1){return 0;}
+    best->startFormation((fleet->getFleetSize()/5)+1);
+    Unit *tmp;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitPower();
+    best->formArray[best->getR()][best->getW()]=tmp;
+    best->updateRW();
+    best->setFormNowSize(1);
+    tmp=tmp->next;
+    while(tmp)
+    {
+        if(tmp->getUnitPower()>top)
+        {
+            top=tmp->getUnitPower();
+            best->nullArr();
+            best->updateRW();
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(1);
+        }
+        else if(tmp->getUnitPower()==top)
+        {
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(best->getFormNowSize()+1);
+        }
+        tmp=tmp->next;
+    }
+    return 1;
+}
+int FleetManager::bestSpeedUnit(Fleet *fleet, Formation* best)
+{
+    if(fleet->getFleetSize()==0||best->getFormWidth()>0||best->getCheckStartForm()==1){return 0;}
+    best->startFormation((fleet->getFleetSize()/5)+1);
+    Unit *tmp;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitSpeed();
+    best->formArray[best->getR()][best->getW()]=tmp;
+    best->updateRW();
+    best->setFormNowSize(1);
+    tmp=tmp->next;
+    while(tmp)
+    {
+        if(tmp->getUnitSpeed()>top)
+        {
+            top=tmp->getUnitSpeed();
+            best->nullArr();
+            best->updateRW();
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(1);
+        }
+        else if(tmp->getUnitSpeed()==top)
+        {
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(best->getFormNowSize()+1);
+        }
+        tmp=tmp->next;
+    }
+    return 1;
+}
+int FleetManager::bestCapacityUnit(Fleet *fleet, Formation* best)
+{
+    if(fleet->getFleetSize()==0||best->getFormWidth()>0||best->getCheckStartForm()==1){return 0;}
+    best->startFormation((fleet->getFleetSize()/5)+1);
+    Unit *tmp;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitCapacity();
+    best->formArray[best->getR()][best->getW()]=tmp;
+    best->updateRW();
+    best->setFormNowSize(1);
+    tmp=tmp->next;
+    while(tmp)
+    {
+        if(tmp->getUnitCapacity()>top)
+        {
+            top=tmp->getUnitCapacity();
+            best->nullArr();
+            best->updateRW();
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(1);
+        }
+        else if(tmp->getUnitCapacity()==top)
+        {
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(best->getFormNowSize()+1);
+        }
+        tmp=tmp->next;
+    }
+    return 1;
+}
+int FleetManager::bestDefenseUnit(Fleet *fleet, Formation* best)
+{
+    if(fleet->getFleetSize()==0||best->getFormWidth()>0||best->getCheckStartForm()==1){return 0;}
+    best->startFormation((fleet->getFleetSize()/5)+1);
+    Unit *tmp;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitDefense();
+    best->formArray[best->getR()][best->getW()]=tmp;
+    best->updateRW();
+    best->setFormNowSize(1);
+    tmp=tmp->next;
+    while(tmp)
+    {
+        if(tmp->getUnitDefense()>top)
+        {
+            top=tmp->getUnitDefense();
+            best->nullArr();
+            best->updateRW();
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(1);
+        }
+        else if(tmp->getUnitDefense()==top)
+        {
+            best->formArray[best->getR()][best->getW()]=tmp;
+            best->updateRW();
+            best->setFormNowSize(best->getFormNowSize()+1);
+        }
+        tmp=tmp->next;
+    }
+    return 1;
+}
+//------------------------------------------------
 Unit* FleetManager::bestPowerUnit(Formation* Form)
 {
     Unit* tmp, * uPow;
@@ -181,81 +314,121 @@ Unit* FleetManager::bestDefenseUnit(Formation* Form)
     return uDef;
 }
 //-----------------------------------------------------
-Formation* FleetManager::bestDefenseForm(Fleet* fleet)
+int FleetManager::bestDefenseForm(Fleet* fleet, Fleet* best)
 {
-    if(fleet->getFleetFormNumb()==0) return NULL;
-    Formation* tmp, * fDef;
-    int iDef;
+    if(fleet->getFleetFormNumb()==0) return 0;
+    Formation* tmp;
+    int top;
     tmp=fleet->lastFormation;
-    fDef=fleet->lastFormation;
-    iDef=fDef->getFormationDefense();
+    best->lastFormation=fleet->lastFormation;
+    top=best->lastFormation->getFormationDefense();
+    best->setFleetFormNumb(1);
+    tmp=tmp->prev;
     while(tmp)
     {
-        if(iDef<tmp->getFormationDefense())
+        if(top<tmp->getFormationDefense())
         {
-            fDef=tmp;
-            iDef=fDef->getFormationDefense();
+            best->nullFormList();
+            best->lastFormation=tmp;
+            top=tmp->getFormationDefense();
+            best->setFleetFormNumb(1);
+        }
+        else if(top==tmp->getFormationDefense())
+        {
+            best->lastFormation->next=tmp;
+            best->lastFormation=tmp;
+            best->setFleetFormNumb(best->getFleetFormNumb()+1);
         }
         tmp=tmp->prev;
     }
-    return fDef;
+    return 1;
 }
-Formation* FleetManager::bestPowerForm(Fleet* fleet)
+int FleetManager::bestPowerForm(Fleet* fleet, Fleet* best)
 {
-    if(fleet->getFleetFormNumb()==0) return NULL;
-    Formation* tmp, * fPow;
-    int iPow;
+    if(fleet->getFleetFormNumb()==0) return 0;
+    Formation* tmp;
+    int top;
     tmp=fleet->lastFormation;
-    fPow=fleet->lastFormation;
-    iPow=fPow->getFormationPower();
+    best->lastFormation=fleet->lastFormation;
+    top=best->lastFormation->getFormationPower();
+    best->setFleetFormNumb(1);
+    tmp=tmp->prev;
     while(tmp)
     {
-        if(iPow<tmp->getFormationPower())
+        if(top<tmp->getFormationPower())
         {
-            fPow=tmp;
-            iPow=fPow->getFormationPower();
+            best->nullFormList();
+            best->lastFormation=tmp;
+            top=tmp->getFormationPower();
+            best->setFleetFormNumb(1);
+        }
+        else if(top==tmp->getFormationPower())
+        {
+            best->lastFormation->next=tmp;
+            best->lastFormation=tmp;
+            best->setFleetFormNumb(best->getFleetFormNumb()+1);
         }
         tmp=tmp->prev;
     }
-    return fPow;
+    return 1;
 }
-Formation* FleetManager::bestSpeedForm(Fleet* fleet)
+int FleetManager::bestSpeedForm(Fleet* fleet, Fleet* best)
 {
-    if(fleet->getFleetFormNumb()==0) return NULL;
-    Formation* tmp, * fSpe;
-    int iSpe;
+    if(fleet->getFleetFormNumb()==0) return 0;
+    Formation* tmp;
+    int top;
     tmp=fleet->lastFormation;
-    fSpe=fleet->lastFormation;
-    iSpe=fSpe->getFormationSpeed();
+    best->lastFormation=fleet->lastFormation;
+    top=best->lastFormation->getFormationSpeed();
+    best->setFleetFormNumb(1);
+    tmp=tmp->prev;
     while(tmp)
     {
-        if(iSpe<tmp->getFormationSpeed())
+        if(top<tmp->getFormationSpeed())
         {
-            fSpe=tmp;
-            iSpe=fSpe->getFormationSpeed();
+            best->nullFormList();
+            best->lastFormation=tmp;
+            top=tmp->getFormationSpeed();
+            best->setFleetFormNumb(1);
+        }
+        else if(top==tmp->getFormationSpeed())
+        {
+            best->lastFormation->next=tmp;
+            best->lastFormation=tmp;
+            best->setFleetFormNumb(best->getFleetFormNumb()+1);
         }
         tmp=tmp->prev;
     }
-    return fSpe;
+    return 1;
 }
-Formation* FleetManager::bestCapacityForm(Fleet* fleet)
+int FleetManager::bestCapacityForm(Fleet* fleet, Fleet* best)
 {
-    if(fleet->getFleetFormNumb()==0) return NULL;
-    Formation* tmp, * fCapa;
-    int iCapa;
+    if(fleet->getFleetFormNumb()==0) return 0;
+    Formation* tmp;
+    int top;
     tmp=fleet->lastFormation;
-    fCapa=fleet->lastFormation;
-    iCapa=fCapa->getFormationCapacity();
+    best->lastFormation=fleet->lastFormation;
+    top=best->lastFormation->getFormationCapacity();
+    best->setFleetFormNumb(1);
+    tmp=tmp->prev;
     while(tmp)
     {
-        if(iCapa<tmp->getFormationCapacity())
+        if(top<tmp->getFormationCapacity())
         {
-            fCapa=tmp;
-            iCapa=fCapa->getFormationCapacity();
+            best->nullFormList();
+            best->lastFormation=tmp;
+            top=tmp->getFormationCapacity();
+            best->setFleetFormNumb(1);
+        }
+        else if(top==tmp->getFormationCapacity())
+        {
+            best->lastFormation->next=tmp;
+            best->lastFormation=tmp;
+            best->setFleetFormNumb(best->getFleetFormNumb()+1);
         }
         tmp=tmp->prev;
     }
-    return fCapa;
+    return 1;
 }
 //--------------------------------------------------
 int FleetManager::createFormation(Fleet *fleet, int Width, std::string formType)
@@ -413,7 +586,7 @@ void FleetManager::setFormDefense(Formation* form)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
-            tmp=form->getUnitArr(j,i);
+            tmp=form->getUnitArr(i,j);
             if(tmp) iDef+=tmp->getUnitDefense();
         }
     }
@@ -429,11 +602,11 @@ void FleetManager::setFormSpeed(Formation* form)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
-            tmp=form->getUnitArr(j,i);
+            tmp=form->getUnitArr(i,j);
             if(tmp)  iSpe+=tmp->getUnitSpeed();
         }
     }
-    iSpe=iSpe/(form->getFormNowSize());
+    iSpe=(iSpe/(form->getFormNowSize()))+1;
     form->setFormationSpeed(iSpe);
 }
 void FleetManager::setFormCapacity(Formation* form)
@@ -446,7 +619,7 @@ void FleetManager::setFormCapacity(Formation* form)
     {
         for(int j=0; j<form->getFormWidth(); j++)
         {
-            tmp=form->getUnitArr(j,i);
+            tmp=form->getUnitArr(i,j);
             if(tmp) iCapa+=tmp->getUnitCapacity();
         }
     }
@@ -472,18 +645,19 @@ int FleetManager::pullUnitFromForm(Formation* form, Unit* unit)
 {
     int iWidth=form->getUnitWidth(unit);
     int iRow=form->getUnitRow(unit);
-    if(iRow<0 || iWidth<0)
+    if(iRow<0 || iWidth<0||unit==NULL)
     {
         return 0;
     }
     unit->setInFormation(NULL);
     form->formArray[iRow][iWidth]=NULL;
     updateFormation(form);
+    form->updateRW();
     return 1;
 }
-int FleetManager::pushUnitToForm(Formation* form, Unit* unit, int Width, int Row)
+int FleetManager::pushUnitToForm(Formation* form, Unit* unit)
 {
-    if(Width>form->getFormWidth()||Row>form->getFormRows()||form->getFormNowSize()==form->getFormMaxSize()) return 0;
+    if(form->getFormNowSize()==form->getFormMaxSize()) return 0;
     Unit* tmpUnit;
     tmpUnit=fleet->firstUnit;
     if(tmpUnit==NULL) return 0;
@@ -495,20 +669,24 @@ int FleetManager::pushUnitToForm(Formation* form, Unit* unit, int Width, int Row
             {
                 pullUnitFromForm(tmpUnit->getInFormation(), unit);
             }
-            if(form->formArray[Row][Width]!=NULL)
-            {
-                pullUnitFromForm(form, form->formArray[Row][Width]);
-            }
-            form->formArray[Row][Width]=unit;
+            form->formArray[form->getR()][form->getW()]=unit;
             unit->setInFormation(form);
             form->setFormNowSize(form->getFormNowSize()+1);
             updateFormation(form);
+            form->updateRW();
             return 1;
         }
+        tmpUnit=tmpUnit->next;
     }
     return 0;
+
+/*
+            if(form->formArray[Row][Width]!=NULL)
+            {
+                pullUnitFromForm(form, form->formArray[Row][Width]);
+            }*/
 }
-//--------------------
+//--------------------//If there is unit/form return 0
 int FleetManager::isUnitName(std::string name)
 {
     Unit* tmp;
@@ -526,7 +704,7 @@ int FleetManager::isFormName(std::string name)
     tmp=fleet->lastFormation;
     while(tmp)
     {
-        if(tmp->getFormationName()==name) return 0;
+        if(tmp->getFormationName()==name) {return 0;}
         tmp=tmp->prev;
     }
     return 1;

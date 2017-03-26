@@ -1,41 +1,58 @@
 # depslib dependency file v1.0
-1490359867 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/main.cpp
+1490568349 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/main.cpp
 	<iostream>
 	<cstdlib>
 	"Unit.h"
 	"Formation.h"
 	"Fleet.h"
 	"FleetManager.h"
+	"TEST.h"
 
 1490311092 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.cpp
 	"Unit.h"
 
-1490317237 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.h
+1490361373 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Unit.h
 	<iostream>
 	<string>
+
+1490560816 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.cpp
 	"Formation.h"
 
-1490321184 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.cpp
-	"Formation.h"
-
-1490321140 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.h
+1490498513 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Formation.h
 	<iostream>
 	"Unit.h"
 
-1490358888 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.cpp
+1490564776 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.cpp
 	"Fleet.h"
 
-1490322761 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.h
+1490564384 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/Fleet.h
 	"Formation.h"
 	"Unit.h"
 	<iostream>
 
-1490360135 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.cpp
+1490568693 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.cpp
 	"FleetManager.h"
 
-1490328381 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.h
+1490565430 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManager.h
 	"Unit.h"
 	"Formation.h"
 	"Fleet.h"
 	<iostream>
+
+1490499840 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/FleetManagerTEST.h
+	<iostream>
+	"FleetManager.h"
+	"Unit.h"
+	"Formation.h"
+	"Fleet.h"
+
+1490544888 /home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/TEST.h
+	<iostream>
+	"FleetManager.h"
+	"Unit.h"
+	"Formation.h"
+	"Fleet.h"
+
+1490568822 source:/home/wojtek/Documents/PROI17L/proi1/PROIpr1/Proi1/TEST.cpp
+	"TEST.h"
 
