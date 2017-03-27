@@ -28,12 +28,14 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         int getUnitWidth(Unit* unit);
         int getUnitRow(Unit* unit);
         void nullArr();
-        int setFormNowSize(int Size);
-        int setFormationSpeed(int Speed);
-        int setFormationDefense(int Defense);
-        int setFormationPower(int Power);
-        int setFormationCapacity(int Capacity);
-        int setFormationName(std::string Name);
+        void setFormNowSize(int Size);
+        void setFormSpeed();
+        void setFormDefense();
+        void setFormPower();
+        void setFormCapacity();
+        void setFormType(std::string Name);
+        void updateFormation();
+        void setFormation(std::string Name);
         Unit*** formArray;
         Formation operator++();
         Formation operator--();//operators return -1 if they cannot increment or decrement formNowSize

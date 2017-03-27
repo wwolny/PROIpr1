@@ -14,13 +14,13 @@ class FleetManager
         int createUnit(Fleet *fleet, std::string unitName, int unitSpeed, int unitPower, int unitDefense, int unitCapacity);
         int deleteUnit(Fleet *fleet, Unit* delUnit);
         int bestPowerUnit(Fleet* fleet, Formation* best);//the best in fleet
-        int bestSpeedUnit(Fleet* fleet, Formation* best);
+        int bestSpeedUnit(Fleet* fleet, Formation* best);// (* best) pointer to formtation/fleet with best units/formations
         int bestCapacityUnit(Fleet* fleet, Formation* best);
         int bestDefenseUnit(Fleet* fleet, Formation* best);
-        Unit *bestPowerUnit(Formation* Form);//the best in formation
-        Unit *bestSpeedUnit(Formation* Form);
-        Unit *bestCapacityUnit(Formation* Form);
-        Unit *bestDefenseUnit(Formation* Form);
+        int bestPowerUnit(Formation* Form, Formation* best);//the best in formation
+        int bestSpeedUnit(Formation* Form, Formation* best);
+        int bestCapacityUnit(Formation* Form, Formation* best);
+        int bestDefenseUnit(Formation* Form, Formation* best);
         int bestDefenseForm(Fleet* fleet, Fleet* best);//the best formation in fleet
         int bestPowerForm(Fleet* fleet, Fleet* best);
         int bestSpeedForm(Fleet* fleet, Fleet* best);

@@ -87,36 +87,91 @@ int Formation::startFormation(int Width)
     return 1;
 }
 
-int Formation::setFormationSpeed(int Speed)
+void Formation::setFormType(std::string Name)
 {
-    if(Speed<0||this->checkStartForm==0) return 0;
-    this->formSpeed=Speed;
-    return 1;
+    this->setFormType(Name);
 }
-int Formation::setFormationDefense(int Defense)
+void Formation::setFormPower()
 {
-    if(Defense<0||this->checkStartForm==0) return 0;
-    this->formDefense=Defense;
-    return 1;
+    if(this->getFormNowSize()==0) return;
+    Unit* tmp;
+    int iPow=0;
+    tmp=this->getUnitArr(0,0);
+    for(int i=0; i<this->getFormRows(); i++)
+    {
+        for(int j=0; j<this->getFormWidth(); j++)
+        {
+            tmp=this->getUnitArr(i,j);
+            if(tmp) iPow=iPow+tmp->getUnitPower();
+        }
+    }
+    this->setFormationPower(iPow);
 }
-int Formation::setFormationPower(int Power)
+void Formation::setFormDefense()
 {
-    if(Power<0||checkStartForm==0) return 0;
-    this->formPower=Power;
-    return 1;
+    if(this->getFormNowSize()==0) return;
+    Unit* tmp;
+    int iDef=0;
+    tmp=this->getUnitArr(0,0);
+    for(int i=0; i<this->getFormRows(); i++)
+    {
+        for(int j=0; j<this->getFormWidth(); j++)
+        {
+            tmp=this->getUnitArr(i,j);
+            if(tmp) iDef+=tmp->getUnitDefense();
+        }
+    }
+    this->setFormationDefense(iDef);
 }
-int Formation::setFormationCapacity(int Capacity)
+void Formation::setFormSpeed()
 {
-    if(Capacity<0||this->checkStartForm==0) return 0;
-    this->formCapacity=Capacity;
-    return 1;
+    if(this->getFormNowSize()==0) return;
+    Unit* tmp;
+    int iSpe=0;
+    tmp=this->getUnitArr(0,0);
+    for(int i=0; i<this->getFormRows(); i++)
+    {
+        for(int j=0; j<this->getFormWidth(); j++)
+        {
+            tmp=this->getUnitArr(i,j);
+            if(tmp)  iSpe+=tmp->getUnitSpeed();
+        }
+    }
+    iSpe=(iSpe/(form->getFormNowSize()))+1;
+    this->setFormationSpeed(iSpe);
 }
-int Formation::setFormationName(std::string Name)
+void Formation::setFormCapacity()
 {
-    if(this->checkStartForm==0) return 0;
-    this->formType=Name;
-    return 1;
+    if(this->getFormNowSize()==0) return;
+    Unit* tmp;
+    int iCapa=0;
+    tmp=this->getUnitArr(0,0);
+    for(int i=0; i<this->getFormRows(); i++)
+    {
+        for(int j=0; j<this->getFormWidth(); j++)
+        {
+            tmp=this->getUnitArr(i,j);
+            if(tmp) iCapa+=tmp->getUnitCapacity();
+        }
+    }
+    this->setFormationCapacity(iCapa);
 }
+void Formation::setFormation(std::string Name)
+{
+    setFormType(Name);
+    setFormPower();
+    setFormDefense();
+    setFormSpeed();
+    setFormCapacity();
+}
+void Formation::updateFormation()
+{
+    setFormPower();
+    setFormDefense();
+    setFormSpeed();
+    setFormCapacity(;
+}
+
 int Formation::setFormNowSize(int Size)
 {
     this->formNowSize=Size;
