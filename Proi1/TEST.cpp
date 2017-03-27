@@ -157,14 +157,14 @@ bool TEST::testBestUnitInForm()
     Formation *Def;
     Def=new Formation;
     if(Man->bestDefenseUnit(Man->giveForm("Line"), Def)==0) return 0;
-    std::cout<<"Defense of Line formation: "<<Def->getFormationPower()<<std::endl;
+    std::cout<<"Defense of Line formation: "<<Def->getFormationDefense()<<std::endl;
     Formation *Spe;
     Spe=new Formation;
     if(Man->bestSpeedUnit(Man->giveForm("Line"), Spe)==0) return 0;
-    std::cout<<"Speed of Line formation: "<<Spe->getFormationPower()<<std::endl;
+    std::cout<<"Speed of Line formation: "<<Spe->getFormationSpeed()<<std::endl;
     Formation *Capa;
     Capa=new Formation;
     if(Man->bestPowerUnit(Man->giveForm("Line"), Capa)==0) return 0;
-    std::cout<<"Capacity of Line formation: "<<Capa->getFormationPower()<<std::endl;
+    std::cout<<"Capacity of Line formation: "<<Capa->getFormationCapacity()<<std::endl;
     return 1;
 }

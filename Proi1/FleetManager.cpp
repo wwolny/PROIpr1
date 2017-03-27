@@ -188,7 +188,7 @@ int FleetManager::bestPowerUnit(Formation* Form, Formation* best)
             }
         }
     }
-
+    best->updateFormation();
     if(best->getUnitArr(0,0)==NULL) return 0;
     return 1;
 }
@@ -224,6 +224,7 @@ int FleetManager::bestSpeedUnit(Formation* Form, Formation* best)
             }
         }
     }
+    best->updateFormation();
     if(best->getUnitArr(0,0)==NULL) return 0;
     return 1;
 }
@@ -259,6 +260,7 @@ int FleetManager::bestCapacityUnit(Formation* Form, Formation* best)
             }
         }
     }
+    best->updateFormation();
     if(best->getUnitArr(0,0)==NULL) return 0;
     return 1;
 }
@@ -294,6 +296,7 @@ int FleetManager::bestDefenseUnit(Formation* Form, Formation* best)
             }
         }
     }
+    best->updateFormation();
     if(best->getUnitArr(0,0)==NULL) return 0;
     return 1;
 }
@@ -546,68 +549,19 @@ void FleetManager::setFormType(Formation* form, std::string Name)
 }
 void FleetManager::setFormPower(Formation* form)
 {
-    if(form->getFormNowSize()==0) return;
-    Unit* tmp;
-    int iPow=0;
-    tmp=form->getUnitArr(0,0);
-    for(int i=0; i<form->getFormRows(); i++)
-    {
-        for(int j=0; j<form->getFormWidth(); j++)
-        {
-            tmp=form->getUnitArr(i,j);
-            if(tmp) iPow=iPow+tmp->getUnitPower();
-        }
-    }
-    form->setFormPower(iPow);
+    form->setFormPower();
 }
 void FleetManager::setFormDefense(Formation* form)
 {
-    if(form->getFormNowSize()==0) return;
-    Unit* tmp;
-    int iDef=0;
-    tmp=form->getUnitArr(0,0);
-    for(int i=0; i<form->getFormRows(); i++)
-    {
-        for(int j=0; j<form->getFormWidth(); j++)
-        {
-            tmp=form->getUnitArr(i,j);
-            if(tmp) iDef+=tmp->getUnitDefense();
-        }
-    }
-    form->setFormDefense(iDef);
+    form->setFormDefense();
 }
 void FleetManager::setFormSpeed(Formation* form)
 {
-    if(form->getFormNowSize()==0) return;
-    Unit* tmp;
-    int iSpe=0;
-    tmp=form->getUnitArr(0,0);
-    for(int i=0; i<form->getFormRows(); i++)
-    {
-        for(int j=0; j<form->getFormWidth(); j++)
-        {
-            tmp=form->getUnitArr(i,j);
-            if(tmp)  iSpe+=tmp->getUnitSpeed();
-        }
-    }
-    iSpe=(iSpe/(form->getFormNowSize()))+1;
-    form->setFormSpeed(iSpe);
+    form->setFormSpeed();
 }
 void FleetManager::setFormCapacity(Formation* form)
 {
-    if(form->getFormNowSize()==0) return;
-    Unit* tmp;
-    int iCapa=0;
-    tmp=form->getUnitArr(0,0);
-    for(int i=0; i<form->getFormRows(); i++)
-    {
-        for(int j=0; j<form->getFormWidth(); j++)
-        {
-            tmp=form->getUnitArr(i,j);
-            if(tmp) iCapa+=tmp->getUnitCapacity();
-        }
-    }
-    form->setFormCapacity(iCapa);
+    form->setFormCapacity();
 }
 void FleetManager::setFormation(Formation* form, std::string Name)
 {

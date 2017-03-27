@@ -4,6 +4,8 @@ Formation::Formation()
 {
     this->next=NULL;
     this->prev=NULL;
+    this->r=0;
+    this->w=0;
     this->formType="";
     this->formPower=0;
     this->formDefense=0;
@@ -18,6 +20,8 @@ Formation::Formation(int Width)
 {
     this->next=NULL;
     this->prev=NULL;
+    this->r=0;
+    this->w=0;
     this->formType="";
     this->formPower=0;
     this->formDefense=0;
@@ -89,7 +93,7 @@ int Formation::startFormation(int Width)
 
 void Formation::setFormType(std::string Name)
 {
-    this->setFormType(Name);
+    this->formType=Name;
 }
 void Formation::setFormPower()
 {
@@ -105,7 +109,7 @@ void Formation::setFormPower()
             if(tmp) iPow=iPow+tmp->getUnitPower();
         }
     }
-    this->setFormationPower(iPow);
+    this->formPower=iPow;
 }
 void Formation::setFormDefense()
 {
@@ -121,7 +125,7 @@ void Formation::setFormDefense()
             if(tmp) iDef+=tmp->getUnitDefense();
         }
     }
-    this->setFormationDefense(iDef);
+    this->formDefense=iDef;
 }
 void Formation::setFormSpeed()
 {
@@ -137,8 +141,8 @@ void Formation::setFormSpeed()
             if(tmp)  iSpe+=tmp->getUnitSpeed();
         }
     }
-    iSpe=(iSpe/(form->getFormNowSize()))+1;
-    this->setFormationSpeed(iSpe);
+    iSpe=(iSpe/(this->getFormNowSize()))+1;
+    this->formSpeed=iSpe;
 }
 void Formation::setFormCapacity()
 {
@@ -154,7 +158,7 @@ void Formation::setFormCapacity()
             if(tmp) iCapa+=tmp->getUnitCapacity();
         }
     }
-    this->setFormationCapacity(iCapa);
+    this->formCapacity=iCapa;
 }
 void Formation::setFormation(std::string Name)
 {
@@ -169,7 +173,7 @@ void Formation::updateFormation()
     setFormPower();
     setFormDefense();
     setFormSpeed();
-    setFormCapacity(;
+    setFormCapacity();
 }
 
 int Formation::setFormNowSize(int Size)

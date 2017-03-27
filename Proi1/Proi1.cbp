@@ -27,6 +27,8 @@
 		<Unit filename="FleetManager.h" />
 		<Unit filename="Formation.cpp" />
 		<Unit filename="Formation.h" />
+		<Unit filename="MENU.cpp" />
+		<Unit filename="MENU.h" />
 		<Unit filename="Proi1.cbp" />
 		<Unit filename="TEST.cpp" />
 		<Unit filename="TEST.h" />

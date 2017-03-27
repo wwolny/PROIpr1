@@ -28,7 +28,7 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         int getUnitWidth(Unit* unit);
         int getUnitRow(Unit* unit);
         void nullArr();
-        void setFormNowSize(int Size);
+        int setFormNowSize(int Size);
         void setFormSpeed();
         void setFormDefense();
         void setFormPower();
@@ -43,7 +43,8 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         Formation(int Width);
         ~Formation();
     private:
-        int r=0,w=0;//i-Row, j-column(width)
+        int r;//i-Row, j-column(width)
+        int w;
         bool checkStartForm;
         std::string formType;
         int formPower;

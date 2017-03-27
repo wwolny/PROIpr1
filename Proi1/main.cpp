@@ -8,6 +8,7 @@
 #include "Fleet.h"
 #include "FleetManager.h"
 #include "TEST.h"
+#include "MENU.h"
 
 void Menu(FleetManager* myFleet);
 void formationAsset(FleetManager *myFleet);

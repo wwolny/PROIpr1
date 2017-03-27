@@ -51,7 +51,7 @@ void Fleet::nullFormList()
     {
         tmp=this->lastFormation;
         this->lastFormation=this->lastFormation->prev;
-        if(this->lastFormation) this->lastFormation->next=NULL;
+        if(tmp) tmp->next=NULL;
     }
     tmp=NULL;
 }
