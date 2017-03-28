@@ -42,9 +42,10 @@ class FleetManager
         void updateFormation(Formation* form);
         int isUnitName(std::string name);
         int isFormName(std::string name);
+        int isUnitInForm(Formation* form, Unit* unit);
         Formation* giveForm(std::string name);
         Unit* giveUnit(std::string name);
-        Formation bestUnit(Fleet* fleet);
+        //Formation bestUnit(Fleet* fleet);
         FleetManager();
         ~FleetManager();
         Fleet *fleet;

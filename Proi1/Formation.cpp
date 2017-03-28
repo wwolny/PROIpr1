@@ -179,6 +179,7 @@ void Formation::updateFormation()
 int Formation::setFormNowSize(int Size)
 {
     this->formNowSize=Size;
+    return 1;
 }
 
 int Formation::getUnitWidth(Unit* unit)
@@ -236,4 +237,15 @@ void Formation::nullArr()
             this->formArray[i][j]=NULL;
         }
     }
+}
+int Formation::isUnitInForm(Unit* unit)
+{
+    for(int i=0; i<this->Rows; i++)
+    {
+        for(int j=0; j<this->formWidth; j++)
+        {
+            if(this->formArray[i][j]==unit) return 1;
+        }
+    }
+    return 0;
 }

@@ -28,6 +28,7 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         int getUnitWidth(Unit* unit);
         int getUnitRow(Unit* unit);
         void nullArr();
+        int isUnitInForm(Unit* unit);
         int setFormNowSize(int Size);
         void setFormSpeed();
         void setFormDefense();
