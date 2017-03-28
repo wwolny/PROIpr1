@@ -6,16 +6,6 @@ FleetManager::FleetManager()
 }
 FleetManager::~FleetManager()
 {
-    while(fleet->firstUnit)
-    {
-        fleet->firstUnit=fleet->firstUnit->next;
-        delete fleet->firstUnit->prev;
-    }
-    while(fleet->lastFormation)
-    {
-        fleet->lastFormation=fleet->lastFormation->prev;
-        delete fleet->lastFormation->next;
-    }
     delete fleet;
 }
 //----------------------------------

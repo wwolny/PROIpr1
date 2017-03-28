@@ -2,12 +2,12 @@
 
 TEST::TEST()
 {
-    //ctor
+    Man= new FleetManager;
 }
 
 TEST::~TEST()
 {
-    //dtor
+    delete Man;
 }
 
 bool TEST::testFormation()
@@ -53,8 +53,6 @@ bool TEST::testUnit()
 }
 bool TEST::testBestUnit()
 {
-    FleetManager *Man;
-    Man= new FleetManager;
     if(Man->createUnit(Man->fleet, "Ship", 10, 2, 3, 54)==0) return 0;
     if(Man->createUnit(Man->fleet, "WarShip", 12, 33, 43, 2)==0) return 0;
     if(Man->createUnit(Man->fleet, "Tank", 23, 3, 43, 5)==0) return 0;

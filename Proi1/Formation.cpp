@@ -69,6 +69,8 @@ Formation::~Formation()
         delete [] this->formArray[i];
     }
     delete [] formArray;
+    delete this->next;
+    delete this->prev;
 }
 
 Unit* Formation::getUnitArr(int Width, int Row)

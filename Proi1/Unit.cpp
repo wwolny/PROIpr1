@@ -48,5 +48,6 @@ int Unit::setUnitName(std::string Name)
 
 Unit::~Unit()
 {
-    //dtor
+    delete this->next;
+    delete this->prev;
 }

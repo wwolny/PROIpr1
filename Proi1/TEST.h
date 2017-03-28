@@ -17,6 +17,9 @@ class TEST
         bool testBestUnit();
         bool testBestForm();
         bool testBestUnitInForm();
+    private:
+        FleetManager *Man;
+
 };
 
 #endif // TEST_H

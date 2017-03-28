@@ -11,7 +11,20 @@ Fleet::Fleet()
 
 Fleet::~Fleet()
 {
-    delete this;
+    Formation* form;
+    Unit* unit;
+    while(this->firstUnit)
+    {
+        unit=this->firstUnit;
+        this->firstUnit=this->firstUnit->next;
+        delete unit;
+    }
+    while(this->lastFormation)
+    {
+        form=this->lastFormation;
+        this->lastFormation=this->lastFormation->prev;
+        delete form;
+    }
 }
 int Fleet::operator++()
 {
