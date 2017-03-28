@@ -26,6 +26,7 @@ class Unit
         void setInFormation(Formation* form);
         Unit();
         ~Unit();
+        Unit (const Unit &unit);
     private:
         class Formation* inFormation;
         std::string unitName;

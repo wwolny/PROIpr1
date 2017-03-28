@@ -26,18 +26,22 @@ Fleet::~Fleet()
         delete form;
     }
 }
-int Fleet::operator++()
+Fleet::Fleet (const Fleet& fleet)
 {
-    this->fleetFormNumb++;
-    return 1;
+    firstUnit=NULL;
+    Unit* tmpU1, tmpU2;
+    tmpU2=fleet.firstUnit->next;
+    tmpU1=firstUnit;
+    while(tmpU2)
+    {
+        tmpU1->next=tmpU2;
+        tmpU2=tmpU2->next;
+    }
+    lastFormation=NULL;
+    fleetFormNumb=fleet.getFleetFormNumb();
+    fleetName=fleet.fleetName;
+    fleetSize=fleet.fleetSize;
 }
-int Fleet::operator--()
-{
-    if(this->fleetFormNumb==0)return 0;
-    this->fleetFormNumb--;
-    return 1;
-}
-
 int Fleet::setFleetSize(int Size)
 {
     if(Size<0) return 0;

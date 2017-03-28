@@ -38,11 +38,10 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         void updateFormation();
         void setFormation(std::string Name);
         Unit*** formArray;
-        Formation operator++();
-        Formation operator--();//operators return -1 if they cannot increment or decrement formNowSize
         Formation();
         Formation(int Width);
         ~Formation();
+        Formation (const Formation& form);// czy kopiowac tablice
     private:
         int r;//i-Row, j-column(width)
         int w;

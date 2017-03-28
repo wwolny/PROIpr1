@@ -15,12 +15,11 @@ class Fleet //:Formation :Unit
         int setFleetFormNumb(int FormNumb);
         int setFleetName(std::string Name);
         void nullFormList();
-        int operator++();
-        int operator--();
         Formation* lastFormation;
         Unit* firstUnit;
         Fleet();
         ~Fleet();
+        Fleet (const Fleet& fleet);
     private:
         std::string fleetName;
         int fleetSize;//number of units

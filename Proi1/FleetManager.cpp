@@ -8,6 +8,91 @@ FleetManager::~FleetManager()
 {
     delete fleet;
 }
+//-----------------------------------
+Unit* FleetManager::bPowU(Fleet *fleet)
+{
+    if(fleet->getFleetSize()==0){return NULL;}
+    Unit *tmp, *best;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitPower();
+    best=tmp;
+    while(tmp)
+    {
+        if(tmp->getUnitPower()>tmp)
+        {
+            top=tmp->getUnitPower();
+            best=tmp;
+        }
+        tmp=tmp->next;
+    }
+    Unit theBest(best);
+    return theBest;
+}
+Unit* FleetManager::bSpeU(Fleet *fleet)
+{
+    if(fleet->getFleetSize()==0){return NULL;}
+    Unit *tmp, *best;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitSpeed();
+    best=tmp;
+    while(tmp)
+    {
+        if(tmp->getUnitSpeed()>tmp)
+        {
+            top=tmp->getUnitSpeed();
+            best=tmp;
+        }
+        tmp=tmp->next;
+    }
+    Unit theBest(best);
+    return theBest;
+}
+Unit* FleetManager::bDefU(Fleet *fleet)
+{
+    if(fleet->getFleetSize()==0){return NULL;}
+    Unit *tmp, *best;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitDefense();
+    best=tmp;
+    while(tmp)
+    {
+        if(tmp->getUnitDefense()>tmp)
+        {
+            top=tmp->getUnitDefense();
+            best=tmp;
+        }
+        tmp=tmp->next;
+    }
+    Unit theBest(best);
+    return theBest;
+}
+Unit* FleetManager::bCapaU(Fleet *fleet)
+{
+    if(fleet->getFleetSize()==0){return NULL;}
+    Unit *tmp, *best;
+    int top;
+    tmp=fleet->firstUnit;
+    top=tmp->getUnitCapacity();
+    best=tmp;
+    while(tmp)
+    {
+        if(tmp->getUnitCapacity()>tmp)
+        {
+            top=tmp->getUnitCapacity();
+            best=tmp;
+        }
+        tmp=tmp->next;
+    }
+    Unit theBest(best);
+    return theBest;
+}
+
+
+
+/*
 //----------------------------------
 int FleetManager::bestPowerUnit(Fleet* fleet, Formation* best)
 {
@@ -86,10 +171,21 @@ int FleetManager::bestCapacityUnit(Fleet *fleet, Formation* best)
     int top;
     tmp=fleet->firstUnit;
     top=tmp->getUnitCapacity();
+
+
+
+
+
+
+    top=tmp->getUnitCapacity();
     best->formArray[best->getR()][best->getW()]=tmp;
     best->updateRW();
     best->setFormNowSize(1);
     tmp=tmp->next;
+
+
+
+
     while(tmp)
     {
         if(tmp->getUnitCapacity()>top)
@@ -297,23 +393,23 @@ int FleetManager::bestDefenseForm(Fleet* fleet, Fleet* best)
     Formation* tmp;
     int top;
     tmp=fleet->lastFormation;
-    best->lastFormation=fleet->lastFormation;
-    top=best->lastFormation->getFormationDefense();
-    best->setFleetFormNumb(1);
+    top=tmp->getFormationDefense();
     tmp=tmp->prev;
     while(tmp)
     {
-        if(top<tmp->getFormationDefense())
+        if(top<tmp->getFormationDefense()) top=tmp->getFormationDefense();
+        tmp->tmp->prev;
+    }
+    tmp=fleet->lastFormation;
+    best->lastFormation=NULL;
+    while(tmp)
+    {
+        if(top==tmp->getFormationDefense())
         {
-            best->nullFormList();
-            best->lastFormation=tmp;
-            top=tmp->getFormationDefense();
-            best->setFleetFormNumb(1);
-        }
-        else if(top==tmp->getFormationDefense())
-        {
+            Formation (*tmp);
             best->lastFormation->next=tmp;
             best->lastFormation=tmp;
+            best->lastFormation->prev=tmp->prev;
             best->setFleetFormNumb(best->getFleetFormNumb()+1);
         }
         tmp=tmp->prev;
@@ -406,7 +502,7 @@ int FleetManager::bestCapacityForm(Fleet* fleet, Fleet* best)
         tmp=tmp->prev;
     }
     return 1;
-}
+}*/
 //--------------------------------------------------
 int FleetManager::createFormation(Fleet *fleet, int Width, std::string formType)
 {

@@ -48,6 +48,16 @@ int Unit::setUnitName(std::string Name)
 
 Unit::~Unit()
 {
-    delete this->next;
-    delete this->prev;
+
+}
+Unit::Unit (const Unit &unit)
+{
+    inFormation=NULL;
+    unitName=unit.unitName;
+    unitCapacity=unit.unitCapacity;
+    unitPower=unit.unitPower;
+    unitSpeed=unit.unitSpeed;
+    unitDefense=unit.unitDefense;
+    next=NULL;
+    prev=NULL;
 }
