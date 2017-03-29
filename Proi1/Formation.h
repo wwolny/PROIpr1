@@ -41,7 +41,8 @@ class Formation //Attention! You have to FIRSTLY implement function startFormati
         Formation();
         Formation(int Width);
         ~Formation();
-        Formation (const Formation& form);// czy kopiowac tablice
+        Formation (const Formation& form);
+        Formation& operator=(const Formation *form);
     private:
         int r;//i-Row, j-column(width)
         int w;

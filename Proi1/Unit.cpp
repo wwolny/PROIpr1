@@ -61,3 +61,16 @@ Unit::Unit (const Unit &unit)
     next=NULL;
     prev=NULL;
 }
+
+Unit & Unit::operator=(const Unit *unit)
+{
+    inFormation=NULL;
+    unitName=unit->unitName;
+    unitCapacity=unit->unitCapacity;
+    unitPower=unit->unitPower;
+    unitSpeed=unit->unitSpeed;
+    unitDefense=unit->unitDefense;
+    next=NULL;
+    prev=NULL;
+    return *this;
+}

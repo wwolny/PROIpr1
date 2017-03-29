@@ -14,7 +14,7 @@ Formation::Formation()
     this->checkStartForm=0;
     this->formWidth=0;
     this->formNowSize=0;
-    his->formMaxSize=0;
+    this->formMaxSize=0;
     this->formArray=new Unit** [Rows];
 }
 Formation::Formation(int Width)
@@ -51,10 +51,10 @@ Formation::~Formation()
         {
             for(int j=0; j<this->formWidth; j++)
             {
-                delete [] this->formArray[i][j];
+                if(this->formArray[i][j]) delete [] this->formArray[i][j];
             }
         }
-        delete [] this->formArray[i];
+        if(this->formArray[i]) delete [] this->formArray[i];
     }
     delete [] formArray;
 }
@@ -253,4 +253,24 @@ Formation::Formation (const Formation& form)//czy kopiowac tablice
     formWidth=0;
     formNowSize=0;
     formMaxSize=0;
+    this->formArray=new Unit** [Rows];
+}
+
+Formation& Formation::operator=(const Formation *form)
+{
+    next=NULL;
+    prev=NULL;
+    r=0;
+    w=0;
+    formType=form->formType;
+    formPower=form->formPower;
+    formDefense=form->formDefense;
+    formSpeed=form->formSpeed;
+    formCapacity=form->formCapacity;
+    checkStartForm=0;
+    formWidth=0;
+    formNowSize=0;
+    formMaxSize=0;
+    this->formArray=new Unit** [Rows];
+    return *this;
 }

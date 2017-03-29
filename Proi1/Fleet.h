@@ -20,6 +20,7 @@ class Fleet //:Formation :Unit
         Fleet();
         ~Fleet();
         Fleet (const Fleet& fleet);
+        Fleet& operator=(const Fleet *fleet);
     private:
         std::string fleetName;
         int fleetSize;//number of units

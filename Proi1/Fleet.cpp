@@ -29,18 +29,19 @@ Fleet::~Fleet()
 Fleet::Fleet (const Fleet& fleet)
 {
     firstUnit=NULL;
-    Unit* tmpU1, tmpU2;
-    tmpU2=fleet.firstUnit->next;
-    tmpU1=firstUnit;
-    while(tmpU2)
-    {
-        tmpU1->next=tmpU2;
-        tmpU2=tmpU2->next;
-    }
     lastFormation=NULL;
-    fleetFormNumb=fleet.getFleetFormNumb();
+    fleetFormNumb=fleet.fleetFormNumb;
     fleetName=fleet.fleetName;
     fleetSize=fleet.fleetSize;
+}
+Fleet& Fleet::operator=(const Fleet *fleet)
+{
+    firstUnit=NULL;
+    lastFormation=NULL;
+    fleetFormNumb=fleet->fleetFormNumb;
+    fleetName=fleet->fleetName;
+    fleetSize=fleet->fleetSize;
+    return *this;
 }
 int Fleet::setFleetSize(int Size)
 {

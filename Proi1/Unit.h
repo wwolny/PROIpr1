@@ -27,6 +27,7 @@ class Unit
         Unit();
         ~Unit();
         Unit (const Unit &unit);
+        Unit & operator=(const Unit *unit);
     private:
         class Formation* inFormation;
         std::string unitName;

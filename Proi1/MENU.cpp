@@ -95,6 +95,7 @@ int MENU::creForm(FleetManager* myFleet)
     int width=0;
     std::string name="";
     std::cout<<"Type width of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>c;
     if(!std::isdigit(c))return this->Fail();
     std::cin.unget();
@@ -103,7 +104,6 @@ int MENU::creForm(FleetManager* myFleet)
     std::cin.ignore(1000,'\n');
     std::cout<<"Type name of formation: ";
     std::cin>>name;
-    std::cin.ignore(1000,'\n');
     if(myFleet->createFormation(myFleet->fleet, width ,name)==1) return this->Success();
     else return this->Fail();
 }
@@ -112,8 +112,8 @@ int MENU::delFor(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"type exactly the name of formation that should be deleted:";
-    std::cin>>name;
     std::cin.ignore(1000,'\n');
+    std::cin>>name;
     if(myFleet->deleteFormation(myFleet->fleet, myFleet->giveForm(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -123,6 +123,7 @@ int MENU::addUnit(FleetManager* myFleet)
     std::string name="";
     int spe=0, def=0, pow=0, capa=0;
     std::cout<<"Type name of unit: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     std::cout<<"Type speed of unit: ";
@@ -152,7 +153,6 @@ int MENU::addUnit(FleetManager* myFleet)
     std::cin.unget();
     std::cin>>capa;
     if(!isIntOK()) return this->Fail();
-    std::cin.ignore(1000,'\n');
     if(myFleet->createUnit(myFleet->fleet,name,spe, pow, def,capa )==1)return this->Success();
     else return this->Fail();
 }
@@ -161,8 +161,8 @@ int MENU::delUnit(FleetManager* myFleet)
     std::string name;
     this->writeUnitAll(myFleet->fleet);
     std::cout<<"Type name of unit that should be deleted: ";
-    std::cin>>name;
     std::cin.ignore(1000,'\n');
+    std::cin>>name;
     if(myFleet->deleteUnit(myFleet->fleet, myFleet->giveUnit(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -171,12 +171,12 @@ int MENU::push(FleetManager* myFleet)
     std::string name, tmp;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     writeUnitAll(myFleet->fleet);
     std::cout<<"Type name of unit: ";
     std::cin>>tmp;
-    std::cin.ignore(1000,'\n');
     if(myFleet->pushUnitToForm(myFleet->giveForm(name), myFleet->giveUnit(tmp))==1) return this->Success();
     else return this->Fail();
 }
@@ -185,6 +185,7 @@ int MENU::pull(FleetManager* myFleet)
     std::string name, tmp;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     this->writeAllUnitInForm(myFleet->giveForm(name));
@@ -199,6 +200,7 @@ int MENU::unitInForm(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     if(myFleet->isFormName(name)) return this->Fail();
@@ -212,8 +214,8 @@ void MENU::Menu()
     while(1)
     {
         this->options();
-        std::cin>>Next;
         std::cin.ignore(1000,'\n');
+        std::cin>>Next;
         system("clear");
         switch (Next)
         {
@@ -261,20 +263,16 @@ void MENU::Menu()
 int MENU::BEST(FleetManager* myFleet)
 {
     char best;
-    Formation* BestFr;
-    BestFr=new Formation;
-    Fleet* BestFl;
-    BestFl=new Fleet;
     while(1)
-    {/*
+    {
         this->BestOptions();
-        std::cin>>best;
         std::cin.ignore(1000,'\n');
+        std::cin>>best;
         system("clear");
         switch (best)
         {
             case 'q':
-                this->unFlPow(myFleet, );
+                this->unFlPow(myFleet);
                 break;
             case 'w':
                 this->unFlSpe(myFleet);
@@ -312,118 +310,133 @@ int MENU::BEST(FleetManager* myFleet)
             case 'l':
                 return 0;
             default:
-                std::cout<<"Bad Input!";
+                std::cout<<"Bad Input!"<<std::endl;
                 break;
         }
-        system("clear");*/
     }
     return 1;
 }
 //---------------
-int MENU::unFlCapa(FleetManager* myFleet, Formation* Best)
+int MENU::unFlCapa(FleetManager* myFleet)
 {
-    if(myFleet->bestCapacityUnit(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The best capacity unit(s) in fleet is(are): "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    Unit best(*myFleet->bCapaU(myFleet->fleet));
+    std::cout<<"The best capacity unit in fleet is: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unFlPow(FleetManager* myFleet, Formation* Best)
+int MENU::unFlPow(FleetManager* myFleet)
 {
-    if(myFleet->bestPowerUnit(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The most powerful unit(s) in fleet is(are): "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    Unit best(*myFleet->bPowU(myFleet->fleet));
+    std::cout<<"The most powerful unit in fleet is: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unFlDef(FleetManager* myFleet, Formation* Best)
+int MENU::unFlSpe(FleetManager* myFleet)
 {
-    if(myFleet->bestDefenseUnit(myFleet->fleet, Best)==0)return this->Fail();
-    std::cout<<"The best defensive unit(s) in fleet is(are): "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    Unit best(*myFleet->bSpeU(myFleet->fleet));
+    std::cout<<"The fastest unit in fleet is: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unFlSpe(FleetManager* myFleet, Formation* Best)
+int MENU::unFlDef(FleetManager* myFleet)
 {
-    if(myFleet->bestSpeedUnit(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The fastest unit(s) in fleet is(are): "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    Unit best(*myFleet->bDefU(myFleet->fleet));
+    std::cout<<"The best capacity unit in fleet is: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
 //-------------------
-int MENU::unForPow(FleetManager* myFleet, Formation* Best)
+int MENU::unForPow(FleetManager* myFleet)
 {
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
-    if(myFleet->bestPowerUnit(myFleet->giveForm(name), Best)==0) return this->Fail();
-    std::cout<<"The most powerful unit(s) in formation: "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    Unit best(*myFleet->bPowU(myFleet->giveForm(name)));
+    std::cout<<"The most powerful unit in formation: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unForDef(FleetManager* myFleet, Formation* Best)
+int MENU::unForSpe(FleetManager* myFleet)
 {
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
-    if(myFleet->bestDefenseUnit(myFleet->giveForm(name), Best)==0) return this->Fail();
-    std::cout<<"The best defensive unit(s) in formation: "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    Unit best(*myFleet->bSpeU(myFleet->giveForm(name)));
+    std::cout<<"The fastest unit in formation: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unForCapa(FleetManager* myFleet, Formation* Best)
+int MENU::unForDef(FleetManager* myFleet)
 {
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
-    if(myFleet->bestCapacityUnit(myFleet->giveForm(name), Best)==0) return this->Fail();
-    std::cout<<"The most capacity unit(s) in formation: "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    Unit best(*myFleet->bDefU(myFleet->giveForm(name)));
+    std::cout<<"The best defensive unit in formation: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
-int MENU::unForSpe(FleetManager* myFleet, Formation* Best)
+int MENU::unForCapa(FleetManager* myFleet)
 {
+    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
+    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
-    if(myFleet->bestSpeedUnit(myFleet->giveForm(name), Best)==0) return this->Fail();
-    std::cout<<"The fastest unit(s) in formation: "<<std::endl;
-    this->writeAllUnitInForm(Best);
+    Unit best(*myFleet->bCapaU(myFleet->giveForm(name)));
+    std::cout<<"The best capacity unit in formation: "<<std::endl;
+    this->writeUnit(&best);
     return this->Success();
 }
 //------------------------
-int MENU::forPow(FleetManager* myFleet, Fleet* Best)
+int MENU::forPow(FleetManager* myFleet)
 {
-    if(myFleet->bestPowerForm(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The most powerful formation(s) in fleet: "<<std::endl;
-    this->writeFormAll(Best);
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
+    Formation best(*myFleet->bPowF(myFleet->fleet));
+    std::cout<<"The most powerful formation in fleet: "<<std::endl;
+    this->writeForm(&best);
     return this->Success();
 }
-int MENU::forDef(FleetManager* myFleet, Fleet* Best)
+int MENU::forSpe(FleetManager* myFleet)
 {
-    if(myFleet->bestDefenseForm(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The best defensive formation(s) in fleet: "<<std::endl;
-    this->writeFormAll(Best);
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
+    Formation best(*myFleet->bSpeF(myFleet->fleet));
+    std::cout<<"The fastest formation in fleet: "<<std::endl;
+    this->writeForm(&best);
     return this->Success();
 }
-int MENU::forSpe(FleetManager* myFleet, Fleet* Best)
+int MENU::forDef(FleetManager* myFleet)
 {
-    if(myFleet->bestSpeedForm(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The fastest formation(s) in fleet: "<<std::endl;
-    this->writeFormAll(Best);
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
+    Formation best(*myFleet->bDefF(myFleet->fleet));
+    std::cout<<"The best defensive formation in fleet: "<<std::endl;
+    this->writeForm(&best);
     return this->Success();
 }
-int MENU::forCapa(FleetManager* myFleet, Fleet* Best)
+int MENU::forCapa(FleetManager* myFleet)
 {
-    if(myFleet->bestCapacityForm(myFleet->fleet, Best)==0) return this->Fail();
-    std::cout<<"The best capacity formation(s) in fleet: "<<std::endl;
-    this->writeFormAll(Best);
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
+    Formation best(*myFleet->bCapaF(myFleet->fleet));
+    std::cout<<"The best capacity formation in fleet: "<<std::endl;
+    this->writeForm(&best);
     return this->Success();
 }
 //----------------

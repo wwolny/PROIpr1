@@ -51,7 +51,7 @@ bool TEST::testUnit()
     if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Star"))==1) return 0;
     return 1;
 }
-bool TEST::testBestUnit()
+/*bool TEST::testBestUnit()
 {
     if(Man->createUnit(Man->fleet, "Ship", 10, 2, 3, 54)==0) return 0;
     if(Man->createUnit(Man->fleet, "WarShip", 12, 33, 43, 2)==0) return 0;
@@ -165,4 +165,4 @@ bool TEST::testBestUnitInForm()
     if(Man->bestPowerUnit(Man->giveForm("Line"), Capa)==0) return 0;
     std::cout<<"Capacity of Line formation: "<<Capa->getFormationCapacity()<<std::endl;
     return 1;
-}
+}*/

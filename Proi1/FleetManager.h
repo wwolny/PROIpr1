@@ -13,18 +13,18 @@ class FleetManager
         int deleteFormation(Fleet *fleet, Formation* delFormation);
         int createUnit(Fleet *fleet, std::string unitName, int unitSpeed, int unitPower, int unitDefense, int unitCapacity);
         int deleteUnit(Fleet *fleet, Unit* delUnit);
-        int bestPowerUnit(Fleet* fleet, Formation* best);//the best in fleet
-        int bestSpeedUnit(Fleet* fleet, Formation* best);// (* best) pointer to formtation/fleet with best units/formations
-        int bestCapacityUnit(Fleet* fleet, Formation* best);
-        int bestDefenseUnit(Fleet* fleet, Formation* best);
-        int bestPowerUnit(Formation* Form, Formation* best);//the best in formation
-        int bestSpeedUnit(Formation* Form, Formation* best);
-        int bestCapacityUnit(Formation* Form, Formation* best);
-        int bestDefenseUnit(Formation* Form, Formation* best);
-        int bestDefenseForm(Fleet* fleet, Fleet* best);//the best formation in fleet
-        int bestPowerForm(Fleet* fleet, Fleet* best);
-        int bestSpeedForm(Fleet* fleet, Fleet* best);
-        int bestCapacityForm(Fleet* fleet, Fleet* best);
+        Unit* bPowU(Fleet *fleet);//the best in fleet
+        Unit* bSpeU(Fleet *fleet);
+        Unit* bDefU(Fleet *fleet);
+        Unit* bCapaU(Fleet *fleet);
+        Unit* bPowU(Formation* Form);//the best in formation
+        Unit* bSpeU(Formation* Form);
+        Unit* bDefU(Formation* Form);
+        Unit* bCapaU(Formation* Form);
+        Formation* bPowF(Fleet* fleet);//the best formation in fleet
+        Formation* bSpeF(Fleet* fleet);
+        Formation* bDefF(Fleet* fleet);
+        Formation* bCapaF(Fleet* fleet);
         void addUnitName(Unit* unit, std::string name);
         void addUnitPower(Unit* unit, int Power);
         void addUnitDefense(Unit* unit, int Defense);
