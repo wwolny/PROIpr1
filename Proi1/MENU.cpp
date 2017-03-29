@@ -198,7 +198,7 @@ int MENU::pull(FleetManager* myFleet)
     std::cout<<"Type name of unit: ";
     std::cin>>tmp;
     std::cin.ignore(1000,'\n');
-    if(myFleet->isFormName(tmp)==1) return this->Fail();
+    if(myFleet->isUnitName(tmp)==1) return this->Fail();
     if(myFleet->pullUnitFromForm(myFleet->giveForm(name), myFleet->giveUnit(tmp))==1) return this->Success();
     else return this->Fail();
 }
