@@ -214,8 +214,8 @@ void MENU::Menu()
     while(1)
     {
         this->options();
-        std::cin.ignore(1000,'\n');
         std::cin>>Next;
+        std::cin.ignore(1000,'\n');
         system("clear");
         switch (Next)
         {
