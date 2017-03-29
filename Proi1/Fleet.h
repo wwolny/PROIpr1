@@ -5,7 +5,7 @@
 #include "Unit.h"
 #include <iostream>
 
-class Fleet //:Formation :Unit
+class Fleet
 {
     public:
         int getFleetSize(){return fleetSize;}

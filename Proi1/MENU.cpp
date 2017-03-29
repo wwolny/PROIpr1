@@ -95,7 +95,6 @@ int MENU::creForm(FleetManager* myFleet)
     int width=0;
     std::string name="";
     std::cout<<"Type width of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>c;
     if(!std::isdigit(c))return this->Fail();
     std::cin.unget();
@@ -104,6 +103,7 @@ int MENU::creForm(FleetManager* myFleet)
     std::cin.ignore(1000,'\n');
     std::cout<<"Type name of formation: ";
     std::cin>>name;
+    std::cin.ignore(1000,'\n');
     if(myFleet->createFormation(myFleet->fleet, width ,name)==1) return this->Success();
     else return this->Fail();
 }
@@ -112,8 +112,8 @@ int MENU::delFor(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"type exactly the name of formation that should be deleted:";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
+    std::cin.ignore(1000,'\n');
     if(myFleet->deleteFormation(myFleet->fleet, myFleet->giveForm(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -123,7 +123,6 @@ int MENU::addUnit(FleetManager* myFleet)
     std::string name="";
     int spe=0, def=0, pow=0, capa=0;
     std::cout<<"Type name of unit: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     std::cout<<"Type speed of unit: ";
@@ -153,6 +152,7 @@ int MENU::addUnit(FleetManager* myFleet)
     std::cin.unget();
     std::cin>>capa;
     if(!isIntOK()) return this->Fail();
+    std::cin.ignore(1000,'\n');
     if(myFleet->createUnit(myFleet->fleet,name,spe, pow, def,capa )==1)return this->Success();
     else return this->Fail();
 }
@@ -161,8 +161,8 @@ int MENU::delUnit(FleetManager* myFleet)
     std::string name;
     this->writeUnitAll(myFleet->fleet);
     std::cout<<"Type name of unit that should be deleted: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
+    std::cin.ignore(1000,'\n');
     if(myFleet->deleteUnit(myFleet->fleet, myFleet->giveUnit(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -171,12 +171,12 @@ int MENU::push(FleetManager* myFleet)
     std::string name, tmp;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     writeUnitAll(myFleet->fleet);
     std::cout<<"Type name of unit: ";
     std::cin>>tmp;
+    std::cin.ignore(1000,'\n');
     if(myFleet->pushUnitToForm(myFleet->giveForm(name), myFleet->giveUnit(tmp))==1) return this->Success();
     else return this->Fail();
 }
@@ -185,7 +185,6 @@ int MENU::pull(FleetManager* myFleet)
     std::string name, tmp;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     this->writeAllUnitInForm(myFleet->giveForm(name));
@@ -200,7 +199,6 @@ int MENU::unitInForm(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     if(myFleet->isFormName(name)) return this->Fail();
@@ -266,8 +264,8 @@ int MENU::BEST(FleetManager* myFleet)
     while(1)
     {
         this->BestOptions();
-        std::cin.ignore(1000,'\n');
         std::cin>>best;
+        std::cin.ignore(1000,'\n');
         system("clear");
         switch (best)
         {
@@ -356,7 +354,6 @@ int MENU::unForPow(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     Unit best(*myFleet->bPowU(myFleet->giveForm(name)));
@@ -370,7 +367,6 @@ int MENU::unForSpe(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     Unit best(*myFleet->bSpeU(myFleet->giveForm(name)));
@@ -384,7 +380,6 @@ int MENU::unForDef(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     Unit best(*myFleet->bDefU(myFleet->giveForm(name)));
@@ -398,7 +393,6 @@ int MENU::unForCapa(FleetManager* myFleet)
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
-    std::cin.ignore(1000,'\n');
     std::cin>>name;
     std::cin.ignore(1000,'\n');
     Unit best(*myFleet->bCapaU(myFleet->giveForm(name)));

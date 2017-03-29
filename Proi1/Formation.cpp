@@ -54,7 +54,7 @@ Formation::~Formation()
                 if(this->formArray[i][j]) delete [] this->formArray[i][j];
             }
         }
-        if(this->formArray[i]) delete [] this->formArray[i];
+        delete [] this->formArray[i];
     }
     delete [] formArray;
 }
@@ -238,7 +238,7 @@ int Formation::isUnitInForm(Unit* unit)
     }
     return 0;
 }
-Formation::Formation (const Formation& form)//czy kopiowac tablice
+Formation::Formation (const Formation& form)
 {
     next=NULL;
     prev=NULL;
@@ -249,11 +249,19 @@ Formation::Formation (const Formation& form)//czy kopiowac tablice
     formDefense=form.formDefense;
     formSpeed=form.formSpeed;
     formCapacity=form.formCapacity;
-    checkStartForm=0;
-    formWidth=0;
+    checkStartForm=1;
+    formWidth=1;
     formNowSize=0;
     formMaxSize=0;
-    this->formArray=new Unit** [Rows];
+    formArray=new Unit** [Rows];
+    formWidth=form.formWidth;
+        for (int i=0; i<Rows; i++)
+        {
+            formArray[i] = new Unit* [formWidth];
+        }
+        nullArr();
+        checkStartForm=1;
+        formMaxSize=formWidth*Rows;
 }
 
 Formation& Formation::operator=(const Formation *form)
@@ -267,10 +275,16 @@ Formation& Formation::operator=(const Formation *form)
     formDefense=form->formDefense;
     formSpeed=form->formSpeed;
     formCapacity=form->formCapacity;
-    checkStartForm=0;
-    formWidth=0;
+    checkStartForm=1;
     formNowSize=0;
-    formMaxSize=0;
-    this->formArray=new Unit** [Rows];
+    formArray=new Unit** [Rows];
+    formWidth=form->formWidth;
+        for (int i=0; i<Rows; i++)
+        {
+            formArray[i] = new Unit* [formWidth];
+        }
+        nullArr();
+        checkStartForm=1;
+        formMaxSize=formWidth*Rows;
     return *this;
 }

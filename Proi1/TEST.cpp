@@ -12,8 +12,6 @@ TEST::~TEST()
 
 bool TEST::testFormation()
 {
-    FleetManager *Man;
-    Man= new FleetManager;
     if(Man->createFormation(Man->fleet, 5, "Artur")==0) return 0;
     if(Man->createFormation(Man->fleet, 5, "Line")==0) return 0;
     if(Man->createFormation(Man->fleet, 5, "Dok")==0) return 0;
@@ -22,15 +20,17 @@ bool TEST::testFormation()
     if(Man->deleteFormation(Man->fleet, Man->giveForm("Fish"))==1) return 0;
     if(Man->deleteFormation(Man->fleet, Man->giveForm("Line"))==0) return 0;
     if(Man->deleteFormation(Man->fleet, Man->giveForm("Elephant"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Artur"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Dok"))==0) return 0;
     if((Man->isFormName("Ostrich"))==1) return 0;
-    if(Man->createFormation(Man->fleet, 5, "Artur")==1) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Ostrich"))==0) return 0;
+    if(Man->createFormation(Man->fleet, 5, "Artur")==0) return 0;
     if(Man->isFormName("Artur")==1) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Artur"))==0) return 0;
     return 1;
 }
 bool TEST::testUnit()
 {
-    FleetManager *Man;
-    Man= new FleetManager;
     if(Man->createUnit(Man->fleet, "Ship", 1, 3, 4, 5)==0) return 0;
     if(Man->createUnit(Man->fleet, "WarShip", 1, 3, 4, 5)==0) return 0;
     if(Man->createUnit(Man->fleet, "Tank", 1, 3, 4, 5)==0) return 0;
@@ -45,10 +45,20 @@ bool TEST::testUnit()
     if(Man->pushUnitToForm(Man->giveForm("Line"), Man->giveUnit("Sword"))==0) return 0;
     if(Man->pushUnitToForm(Man->giveForm("Line"), Man->giveUnit("Meatball"))==0) return 0;
     if(Man->pushUnitToForm(Man->giveForm("Line"), Man->giveUnit("Star"))==1) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Tank"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Sword"))==0) return 0;
     if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Meatball"))==0) return 0;
     if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Ship"))==0) return 0;
     if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Mistake"))==1) return 0;
     if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Star"))==1) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Line"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Ship"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Tank"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Sword"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star"))==0) return 0;
     return 1;
 }
 bool TEST::testBestUnit()
@@ -70,7 +80,7 @@ bool TEST::testBestUnit()
     if(Capa.getUnitCapacity()!=2435) return 0;
 
     Unit Pow(*Man->bPowU(Man->fleet));
-    if(Pow  .getUnitPower()!=1235) return 0;
+    if(Pow.getUnitPower()!=1235) return 0;
 
     Unit Def(*Man->bDefU(Man->fleet));
     if(Def.getUnitDefense()!=143) return 0;
@@ -78,12 +88,21 @@ bool TEST::testBestUnit()
     Unit Spe(*Man->bSpeU(Man->fleet));
     if(Spe.getUnitSpeed()!=1123) return 0;
 
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Ship"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Tank"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Sword"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star1"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star2"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star3"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star4"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star5"))==0) return 0;
     return 1;
 }
 bool TEST::testBestUnitInForm()
 {
-    FleetManager *Man;
-    Man= new FleetManager;
     if(Man->createFormation(Man->fleet, 5, "Line")==0) return 0;
     if(Man->createUnit(Man->fleet, "Ship", 2, 23, 332, 23)==0) return 0;
     if(Man->createUnit(Man->fleet, "WarShip", 321, 21, 12, 31)==0) return 0;
@@ -110,12 +129,24 @@ bool TEST::testBestUnitInForm()
 
     Unit Capa(*Man->bCapaU(Man->giveForm("Line")));
     if(Capa.getUnitCapacity()!=51) return 0;
+
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Tank"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Sword"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Ship"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Star"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Ship"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Tank"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Sword"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Line"))==0) return 0;
     return 1;
 }
 bool TEST::testBestForm()
 {
-    FleetManager *Man;
-    Man= new FleetManager;
     if(Man->createFormation(Man->fleet, 1, "Line")==0) return 0;
     if(Man->createFormation(Man->fleet, 5, "Dragon")==0) return 0;
     if(Man->createFormation(Man->fleet, 3, "Lava")==0) return 0;
@@ -155,5 +186,30 @@ bool TEST::testBestForm()
     Formation Capa(*Man->bCapaF(Man->fleet));
     if(Capa.getFormationCapacity()!=2513) return 0;
 
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Tank"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Dragon"), Man->giveUnit("Sword"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Dragon"), Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Ship"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Dragon"), Man->giveUnit("Star"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Line"), Man->giveUnit("Star1"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Dragon"), Man->giveUnit("Star2"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Lava"), Man->giveUnit("Star3"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Lava"), Man->giveUnit("Star4"))==0) return 0;
+    if(Man->pullUnitFromForm(Man->giveForm("Lava"), Man->giveUnit("Star5"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Ship"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("WarShip"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Tank"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Sword"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Meatball"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star1"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star2"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star3"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star4"))==0) return 0;
+    if(Man->deleteUnit(Man->fleet, Man->giveUnit("Star5"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Line"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Lava"))==0) return 0;
+    if(Man->deleteFormation(Man->fleet, Man->giveForm("Dragon"))==0) return 0;
     return 1;
 }

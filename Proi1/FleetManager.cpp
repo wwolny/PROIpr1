@@ -206,8 +206,11 @@ Formation* FleetManager::bPowF(Fleet* fleet)
     best=NULL;
     int top=-1;
     tmp=fleet->lastFormation;
-    best=fleet->lastFormation;
-    top=best->getFormationPower();
+    if(tmp)
+    {
+        best=fleet->lastFormation;
+        top=best->getFormationPower();
+    }
     while(tmp)
     {
         if(top<tmp->getFormationPower())
@@ -360,7 +363,7 @@ int FleetManager::deleteUnit(Fleet *fleet, Unit* delUnit)
             {
                 fleet->setFleetSize(fleet->getFleetSize()-1);
                 fleet->firstUnit=fleet->firstUnit->next;
-                fleet->firstUnit->prev=NULL;
+                if(fleet->firstUnit)    fleet->firstUnit->prev=NULL;
             }
             if(tmpUnit->next){tmpUnit->next->prev=tmpUnit->prev;}
             if(tmpUnit->prev){tmpUnit->prev->next=tmpUnit->next;}
