@@ -104,6 +104,7 @@ int MENU::creForm(FleetManager* myFleet)
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==0) return this->Fail();
     if(myFleet->createFormation(myFleet->fleet, width ,name)==1) return this->Success();
     else return this->Fail();
 }
@@ -114,6 +115,7 @@ int MENU::delFor(FleetManager* myFleet)
     std::cout<<"type exactly the name of formation that should be deleted:";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     if(myFleet->deleteFormation(myFleet->fleet, myFleet->giveForm(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -125,6 +127,7 @@ int MENU::addUnit(FleetManager* myFleet)
     std::cout<<"Type name of unit: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isUnitName(name)==0) return this->Fail();
     std::cout<<"Type speed of unit: ";
     std::cin>>c;
     if(!std::isdigit(c)) return this->Fail();
@@ -163,6 +166,7 @@ int MENU::delUnit(FleetManager* myFleet)
     std::cout<<"Type name of unit that should be deleted: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isUnitName(name)==1) return this->Fail();
     if(myFleet->deleteUnit(myFleet->fleet, myFleet->giveUnit(name))==1) return this->Success();
     else return this->Fail();
 }
@@ -173,10 +177,12 @@ int MENU::push(FleetManager* myFleet)
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     writeUnitAll(myFleet->fleet);
     std::cout<<"Type name of unit: ";
     std::cin>>tmp;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isUnitName(tmp)==1) return this->Fail();
     if(myFleet->pushUnitToForm(myFleet->giveForm(name), myFleet->giveUnit(tmp))==1) return this->Success();
     else return this->Fail();
 }
@@ -187,10 +193,12 @@ int MENU::pull(FleetManager* myFleet)
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     this->writeAllUnitInForm(myFleet->giveForm(name));
     std::cout<<"Type name of unit: ";
     std::cin>>tmp;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(tmp)==1) return this->Fail();
     if(myFleet->pullUnitFromForm(myFleet->giveForm(name), myFleet->giveUnit(tmp))==1) return this->Success();
     else return this->Fail();
 }
