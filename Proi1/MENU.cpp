@@ -350,12 +350,13 @@ int MENU::unFlDef(FleetManager* myFleet)
 //-------------------
 int MENU::unForPow(FleetManager* myFleet)
 {
-    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     Unit best(*myFleet->bPowU(myFleet->giveForm(name)));
     std::cout<<"The most powerful unit in formation: "<<std::endl;
     this->writeUnit(&best);
@@ -363,12 +364,13 @@ int MENU::unForPow(FleetManager* myFleet)
 }
 int MENU::unForSpe(FleetManager* myFleet)
 {
-    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     Unit best(*myFleet->bSpeU(myFleet->giveForm(name)));
     std::cout<<"The fastest unit in formation: "<<std::endl;
     this->writeUnit(&best);
@@ -376,12 +378,13 @@ int MENU::unForSpe(FleetManager* myFleet)
 }
 int MENU::unForDef(FleetManager* myFleet)
 {
-    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     Unit best(*myFleet->bDefU(myFleet->giveForm(name)));
     std::cout<<"The best defensive unit in formation: "<<std::endl;
     this->writeUnit(&best);
@@ -389,12 +392,13 @@ int MENU::unForDef(FleetManager* myFleet)
 }
 int MENU::unForCapa(FleetManager* myFleet)
 {
-    if(myFleet->fleet->getFleetSize()==0) return this->Fail();
+    if(myFleet->fleet->getFleetFormNumb()==0) return this->Fail();
     std::string name;
     writeFormAll(myFleet->fleet);
     std::cout<<"Type name of formation: ";
     std::cin>>name;
     std::cin.ignore(1000,'\n');
+    if(myFleet->isFormName(name)==1) return this->Fail();
     Unit best(*myFleet->bCapaU(myFleet->giveForm(name)));
     std::cout<<"The best capacity unit in formation: "<<std::endl;
     this->writeUnit(&best);
