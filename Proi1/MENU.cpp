@@ -468,7 +468,7 @@ int MENU::isIntOK()//if fail return 0
     {
         std::cin.clear();
         std::cin.ignore(1000, '\n');
-        return this->Fail();
+        return 0;
     }
     else return 1;
 }
